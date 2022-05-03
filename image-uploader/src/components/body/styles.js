@@ -40,13 +40,22 @@ export const CardSubtitle = styled(titles)`
   margin-bottom: 40px;
 `
 
-export const Drop = styled(flexCenter)`
+export const DropContainer = styled(flexCenter)`
+  width: 80%;
+  height: 45%;
   background-color: #505050;
-  width: 70%;
-  height: 50%;
   border: 4px dashed rgba(100, 100, 100, 1);
   border-radius: 14px;
   flex-direction: column;
+  object-fit: contain;
+  position: relative;
+`
+
+export const Drop = styled(flexCenter)`
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  z-index: 0;
 `
 
 export const DropImg = styled.img`
@@ -79,15 +88,10 @@ export const ButtonText = styled(titles)`
 `
 
 export const FileInput = styled.input`
-  display: block;
   width: 100%;
-  border: none;
-  text-transform: none;
+  height: 100%;
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  opacity: 0;
 `
 
 export const PreviewContainer = styled(Card)`
@@ -96,7 +100,7 @@ export const PreviewContainer = styled(Card)`
 
 export const PreviewList = styled(flexCenter)`
   background-color: #505050;
-  height: 77%;
+  height: 70%;
   width: 95%;
   flex-wrap: wrap;
   overflow-y: scroll;

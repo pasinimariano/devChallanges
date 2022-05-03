@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import {
   PreviewContainer,
@@ -8,32 +8,46 @@ import {
   ImgContainer,
   NewImg,
   ImgData,
-  ImgName
+  ImgName,
+  UploadButton,
+  ButtonText,
+  CardSubtitle
 } from '../styles'
 
-export const PreviewCard = ({ files, convertBytesToKb }) => {
+export const PreviewCard = ({
+  files,
+  convertBytesToKb,
+  copy,
+  setCopy,
+  copyUrl
+}) => {
+  useEffect(() => {
+    setTimeout(() => setCopy({ ok: false, msg: '' }), 10000)
+  }, [copy, setCopy])
+
   return (
     <PreviewContainer>
       <CardTitle> To Upload </CardTitle>
+      <CardSubtitle> {copy.ok ? copy.msg : null} </CardSubtitle>
       <PreviewList>
         {Object.keys(files).map((fileName, index) => {
           let file = files[fileName]
           let isImageFile = file.type.split('/')[0] === 'image'
           let size = convertBytesToKb(file.size)
+          const url = URL.createObjectURL(file)
 
           return (
             <NewImgContainer key={fileName}>
               <ImgContainer>
                 {isImageFile && (
-                  <NewImg
-                    src={URL.createObjectURL(file)}
-                    alt={`file preview ${index}`}
-                  />
+                  <NewImg src={url} alt={`file preview ${index}`} />
                 )}
               </ImgContainer>
               <ImgData isImageFile={isImageFile}>
-                <ImgName>{file.name}</ImgName>
-                <ImgName> Size: {size} kb</ImgName>
+                <ImgName> Size: {size} Kb</ImgName>
+                <UploadButton onClick={() => copyUrl(url)}>
+                  <ButtonText> Copy Link </ButtonText>
+                </UploadButton>
               </ImgData>
             </NewImgContainer>
           )

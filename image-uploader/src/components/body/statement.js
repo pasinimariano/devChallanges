@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 
 export const Statement = () => {
   const [files, setFiles] = useState({})
+  const [copy, setCopy] = useState({ ok: false, msg: '' })
   const dropRef = useRef(null)
 
   const maxBytesFileSize = 54000000
@@ -32,12 +33,20 @@ export const Statement = () => {
     }
   }
 
+  const copyUrl = url => {
+    navigator.clipboard.writeText(url)
+    setCopy({ ok: true, msg: 'Successfully saved in clipwoard' })
+  }
+
   return {
     files,
     dropRef,
     maxBytesFileSize,
     convertBytesToKb,
     handleUpload,
-    handleNewUpload
+    handleNewUpload,
+    copyUrl,
+    copy,
+    setCopy
   }
 }

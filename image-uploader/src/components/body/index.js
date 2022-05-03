@@ -11,7 +11,10 @@ export const Body = () => {
     dropRef,
     handleUpload,
     handleNewUpload,
-    convertBytesToKb
+    convertBytesToKb,
+    copyUrl,
+    copy,
+    setCopy
   } = Statement()
 
   return (
@@ -21,7 +24,13 @@ export const Body = () => {
         handleUpload={handleUpload}
         handleNewUpload={handleNewUpload}
       />
-      <PreviewCard files={files} convertBytesToKb={convertBytesToKb} />
+      <PreviewCard
+        files={files}
+        convertBytesToKb={convertBytesToKb}
+        copy={copy}
+        setCopy={setCopy}
+        copyUrl={copyUrl}
+      />
     </Container>
   )
 }
