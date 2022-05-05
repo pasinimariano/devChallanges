@@ -1,4 +1,5 @@
 from os import environ
+
 from db.index import DbConnection
 
 
@@ -9,6 +10,8 @@ class Config:
     DB_CONNECTION = DbConnection()
     DB_CONNECTION.create_db()
     DB_CONNECTION.create_tables()
+    DB_CONNECTION.session_connection()
+    DB_ENGINE = DB_CONNECTION.get_engine()
 
 
 class ProdConfig(Config):

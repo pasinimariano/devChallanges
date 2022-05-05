@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy_utils import database_exists, create_database
-
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import inspect
 from dotenv import dotenv_values
 from .tables import create_all_tables
 
@@ -32,13 +33,25 @@ class DbConnection:
         if not database_exists(self.engine.url):
             try:
                 create_database(self.engine.url)
-                print('Database was successfully created')
+                print(' * Database was successfully created')
             except Exception as error:
-                print('Error when trying to create the database: {}'.format(error))
+                print(' * Error when trying to create the database: {}'.format(error))
 
     def create_tables(self):
         try:
             create_all_tables(self.engine)
-
         except Exception as error:
-            print('Error when trying to create the tables: {}'.format(error))
+            print(' * Error when trying to create the tables: {}'.format(error))
+
+    def session_connection(self):
+        try:
+            session_maker = sessionmaker(bind=self.engine)
+            session = session_maker()
+            print(' * Database connected')
+            return session
+        except Exception as error:
+            print(' * Error when trying to connect to the db: {}'.format(error))
+
+    def get_engine(self):
+        return self.engine
+
