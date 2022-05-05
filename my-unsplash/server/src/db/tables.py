@@ -7,7 +7,6 @@ from sqlalchemy_utils import UUIDType
 Base = declarative_base()
 
 
-
 class Users(Base):
     __tablename__ = 'users'
     id = Column(UUIDType(binary=False), primary_key=True, default=uuid4)
