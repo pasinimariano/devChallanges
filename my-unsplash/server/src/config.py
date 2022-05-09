@@ -1,6 +1,9 @@
 from os import environ
+from dotenv import dotenv_values
 
 from db.index import DbConnection
+
+ENV = dotenv_values()
 
 
 class Config:
@@ -12,6 +15,7 @@ class Config:
     DB_CONNECTION.create_tables()
     DB_CONNECTION.session_connection()
     DB_ENGINE = DB_CONNECTION.get_engine()
+    SECRET_KEY = ENV['SECRET_KEY']
 
 
 class ProdConfig(Config):

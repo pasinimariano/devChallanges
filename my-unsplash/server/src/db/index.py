@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import inspect
 from dotenv import dotenv_values
 from .tables import create_all_tables
 
