@@ -13,9 +13,9 @@ def validate_data(schema):
 
             if res is False:
                 return make_response(
-                    'Invalid data',
+                    'Errors = {}'.format(validator.errors),
                     400,
-                    {'WWW-Authenticate': 'Errors = {}'.format(validator.errors)}
+                    {'WWW-Authenticate': 'Invalid Data'}
                 )
 
             return func()
