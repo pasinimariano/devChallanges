@@ -1,10 +1,15 @@
+import sys
 from functools import wraps
 from flask import request
 
-from .services.usersServices import UserService
-from .commons.hash_password import hash_password, verify_password
-from .commons.send_errors import send_internal_error, send_invalid_error
-from .commons.jwt_token import create_token
+from ..services.usersServices import UserService
+from ..commons.hash_password import hash_password, verify_password
+from ..commons.send_errors import send_internal_error, send_invalid_error
+from ..commons.jwt_token import create_token
+from ..commons.valid_user_data import valid_user_data
+
+sys.path.append('../services')
+sys.path.append('../commons')
 
 
 def create_user_controller(server):
@@ -24,10 +29,10 @@ def create_user_controller(server):
                     lastname,
                 )
 
-                service_response = service.create_new_user()
+                new_user = service.create_new_user()
 
-                if service_response['ok'] is False:
-                    return send_invalid_error(service_response['error'], 'User could`t be created.')
+                if new_user['ok'] is False:
+                    return send_invalid_error(new_user['error'], 'User could`t be created.')
 
             except Exception as error:
                 return send_internal_error(error)
@@ -51,37 +56,111 @@ def login_user_controller(server):
                     password
                 )
 
-                service_response = service.login_user()
+                login = service.login_user()
 
-                if service_response is None:
-                    return send_invalid_error('Invalid data', 'User {} does`t exist'.format(email))
+                valid_user = valid_user_data(login, email, password)
 
-                valid_password = verify_password(password, service_response[4])
+                if valid_user is True:
 
-                if valid_password is False:
-                    return send_invalid_error('Invalid password', 'Password is invalid. Try again')
+                    token = create_token(email, server.config['SECRET_KEY'])
 
-                token = create_token(email, server.config['SECRET_KEY'])
+                    if token['ok'] is False:
+                        send_internal_error(token['error'])
 
-                if token['ok'] is False:
-                    send_internal_error(token['error'])
+                    user_id, user_firstname = login[0], login[1]
+                    user_lastname, user_email = login[2], login[3]
 
-                user_id, user_firstname = service_response[0], service_response[1]
-                user_lastname, user_email = service_response[2], service_response[3]
-
-                response = {
-                    'token': token['token'],
-                    'user': {
-                        '_id': user_id,
-                        'firstname': user_firstname,
-                        'lastname': user_lastname,
-                        'email': user_email
+                    response = {
+                        'token': token['token'],
+                        'user': {
+                            '_id': user_id,
+                            'firstname': user_firstname,
+                            'lastname': user_lastname,
+                            'email': user_email
+                        }
                     }
-                }
+
+                    return func(response)
+
+                return valid_user
 
             except Exception as error:
                 return send_internal_error(error)
 
-            return func(response)
+        return wrapper
+    return decorator
+
+
+def delete_user_controller(server):
+    def decorator(func):
+        @wraps(func)
+        def wrapper():
+            try:
+                req = request.json
+                email, password = req['email'], req['password']
+
+                service = UserService(
+                    server,
+                    email,
+                    password
+                )
+
+                user = service.login_user()
+
+                valid_user = valid_user_data(user, email, password)
+
+                if valid_user is True:
+
+                    user_delete = service.delete_user()
+
+                    return func(user_delete)
+
+                return valid_user
+
+            except Exception as error:
+                send_internal_error(error)
+
+        return wrapper
+    return decorator
+
+
+def update_user_controller(server):
+    def decorator(func):
+        @wraps(func)
+        def wrapper():
+            try:
+                req = request.json
+                email, password = req['email'], req['password']
+                firstname, lastname, _id = req['firstname'], req['lastname'], req['id']
+
+                service = UserService(
+                    server,
+                    email,
+                    password,
+                    firstname,
+                    lastname,
+                    _id
+                )
+
+                user = service.login_user(_id)
+
+                valid_user = valid_user_data(user, email, password)
+
+                if valid_user is True:
+
+                    if 'new_password' in req:
+                        hashed_password = hash_password(req['new_password'])
+                        response = service.update_user(hashed_password)
+                    else:
+                        hashed_password = hash_password(password)
+                        response = service.update_user(hashed_password)
+
+                    return func(response)
+
+                return valid_user
+
+            except Exception as error:
+                send_internal_error(error)
+
         return wrapper
     return decorator
