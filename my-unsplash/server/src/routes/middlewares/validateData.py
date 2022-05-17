@@ -1,11 +1,8 @@
-import sys
 from cerberus import Validator
 from functools import wraps
 from flask import request
 
 from ..commons.send_errors import send_invalid_error
-
-sys.path.append('../commons')
 
 
 def validate_data(schema):

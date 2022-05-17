@@ -7,15 +7,18 @@ ENV = dotenv_values()
 
 
 class Config:
+    SECRET_KEY = ENV['SECRET_KEY']
     SESSION_COOKIE_NAME = environ.get('SESSION_COOKIE_NAME')
+
     STATIC_FOLTER = 'static'
     TEMPLATES_FOLTER = 'templates'
+    IMAGES_ALLOWED_EXTENSIONS = ['png', 'jpg', 'jpeg', 'gif']
+
     DB_CONNECTION = DbConnection()
     DB_CONNECTION.create_db()
     DB_CONNECTION.create_tables()
     DB_CONNECTION.session_connection()
     DB_ENGINE = DB_CONNECTION.get_engine()
-    SECRET_KEY = ENV['SECRET_KEY']
 
 
 class ProdConfig(Config):

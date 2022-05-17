@@ -1,4 +1,3 @@
-import sys
 from functools import wraps
 from flask import request
 
@@ -7,9 +6,6 @@ from ..commons.hash_password import hash_password, verify_password
 from ..commons.send_errors import send_internal_error, send_invalid_error
 from ..commons.jwt_token import create_token
 from ..commons.valid_user_data import valid_user_data
-
-sys.path.append('../services')
-sys.path.append('../commons')
 
 
 def create_user_controller(server):
@@ -23,8 +19,8 @@ def create_user_controller(server):
 
                 service = UserService(
                     server,
-                    email,
                     hashed_password,
+                    email,
                     firstname,
                     lastname,
                 )
@@ -52,13 +48,13 @@ def login_user_controller(server):
 
                 service = UserService(
                     server,
-                    email,
-                    password
+                    password,
+                    email
                 )
 
                 login = service.login_user()
 
-                valid_user = valid_user_data(login, email, password)
+                valid_user = valid_user_data(login, password)
 
                 if valid_user is True:
 
@@ -101,13 +97,13 @@ def delete_user_controller(server):
 
                 service = UserService(
                     server,
-                    email,
-                    password
+                    password,
+                    email
                 )
 
                 user = service.login_user()
 
-                valid_user = valid_user_data(user, email, password)
+                valid_user = valid_user_data(user, password)
 
                 if valid_user is True:
 
@@ -135,16 +131,16 @@ def update_user_controller(server):
 
                 service = UserService(
                     server,
-                    email,
                     password,
+                    email,
                     firstname,
                     lastname,
                     _id
                 )
 
-                user = service.login_user(_id)
+                user = service.login_user()
 
-                valid_user = valid_user_data(user, email, password)
+                valid_user = valid_user_data(user, password)
 
                 if valid_user is True:
 

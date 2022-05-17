@@ -1,6 +1,10 @@
+import sys
 from flask import Flask
 
 from routes.index import set_routes
+
+sys.path.append('../services')
+sys.path.append('../commons')
 
 app = Flask(__name__)
 

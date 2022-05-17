@@ -1,11 +1,8 @@
 import jwt
-import sys
 from flask import request
 from functools import wraps
 
 from ..commons.send_errors import send_invalid_error
-
-sys.path.append('../commons')
 
 
 def token_validator(server):

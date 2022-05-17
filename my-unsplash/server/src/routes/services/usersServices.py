@@ -1,14 +1,11 @@
-import sys
 from uuid import uuid4
 from datetime import datetime
 
 from ..commons.get_table import get_table
 
-sys.path.append('../commons')
-
 
 class UserService:
-    def __init__(self, server, email, password, firstname=None, lastname=None, _id=None):
+    def __init__(self, server, password, email=None, firstname=None, lastname=None, _id=None):
         self.engine = server.config['DB_ENGINE']
         self.user_table = get_table(self.engine, 'users')
         self.firstname = firstname
@@ -39,11 +36,11 @@ class UserService:
             print(' * Error when trying to create user: {}'.format(error))
             return {'ok': False, 'error': error}
 
-    def login_user(self, _id=None):
-        if _id is None:
+    def login_user(self):
+        if self._id is None:
             query = self.user_table.select().where(self.user_table.c.email == self.email)
         else:
-            query = self.user_table.select().where(self.user_table.c.id == _id)
+            query = self.user_table.select().where(self.user_table.c.id == self._id)
 
         self.engine.connect()
         for row in self.engine.execute(query):

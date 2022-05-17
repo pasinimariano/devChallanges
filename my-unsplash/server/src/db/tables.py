@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Text, String, Integer, DateTime, ForeignKey
+from sqlalchemy import Column, Text, String, Integer, DateTime, ForeignKey, LargeBinary
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy_utils import UUIDType
 
@@ -21,14 +21,16 @@ class Users(Base):
 class Images(Base):
     __tablename__ = 'images'
     id = Column(UUIDType(binary=False), primary_key=True, nullable=False)
-    mimetype = Column(Text(), nullable=False)
-    image_file = Column(Text(), nullable=False)
-    title = Column(Text(128), nullable=False)
+    mimetype = Column(String(150), nullable=False)
+    data = Column(LargeBinary(length=352), nullable=False)
+    render_data = Column(Text(), nullable=False)
+    name = Column(Text(), nullable=False)
+    title = Column(String(128), nullable=False)
     description = Column(Text(252), nullable=True)
     likes = Column(Integer(), nullable=True)
     posted_at = Column(DateTime())
     update_at = Column(DateTime())
-    owner_id = Column(UUIDType(binary=False), ForeignKey('users.id'))
+    owner = Column(UUIDType(binary=False), ForeignKey('users.id'))
     comments = relationship('Comments', backref='image_comment')
 
 
