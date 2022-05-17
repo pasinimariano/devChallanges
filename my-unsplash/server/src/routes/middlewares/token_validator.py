@@ -11,7 +11,7 @@ def token_validator(server):
         def token_required():
             token = request.args.get('token')
 
-            if not token:
+            if not token or token is None:
                 return send_invalid_error('Could not verify', 'Token is missing')
 
             try:

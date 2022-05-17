@@ -14,7 +14,23 @@ def validate_data(schema):
             res = validator.validate(req, schema)
 
             if res is False:
-                return send_invalid_error(validator.errors, 'Invalid data')
+                return send_invalid_error('Invalid data', validator.errors)
+
+            return func()
+        return wrapper
+    return decorator
+
+
+def validate_post(schema):
+    def decorator(func):
+        @wraps(func)
+        def wrapper():
+            validator = Validator()
+            req = request.form
+            res = validator.validate(req, schema)
+
+            if res is False:
+                return send_invalid_error('Invalid data', validator.errors,)
 
             return func()
         return wrapper
