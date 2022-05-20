@@ -16,7 +16,7 @@ def users_routes(server):
             200
         )
 
-    @server.route('/user/login', methods=['GET'])
+    @server.route('/user/login', methods=['POST'])
     @validate_data(login_user_schema)
     @login_user_controller(server)
     def login(response):

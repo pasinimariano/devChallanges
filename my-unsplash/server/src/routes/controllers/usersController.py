@@ -28,7 +28,7 @@ def create_user_controller(server):
                 new_user = service.create_new_user()
 
                 if new_user['ok'] is False:
-                    return send_invalid_error(new_user['error'], 'User could`t be created.')
+                    return send_invalid_error(new_user['error'])
 
             except Exception as error:
                 return send_internal_error(error)

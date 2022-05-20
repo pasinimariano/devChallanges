@@ -4,16 +4,14 @@ from flask import make_response
 def send_internal_error(error):
     print(' * Internal server error = {}'.format(error))
     return make_response(
-        'Internal error',
-        500,
-        {'WWW-Authenticate': 'Internal server error'}
+        'Internal error. Please contact with service',
+        500
     )
 
 
-def send_invalid_error(error, msg):
+def send_invalid_error(error):
     print(' * Invalid request = {}'.format(error))
     return make_response(
         'Invalid request = {}'.format(error),
-        400,
-        {'WWW-Authenticate': msg}
+        400
     )

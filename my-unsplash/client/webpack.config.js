@@ -1,6 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const webpack = require('webpack')
+const Dotenv = require('dotenv-webpack')
 
 const isProduction = process.env.NODE_ENV === 'production'
 const publicPath = process.env.PUBLIC_URL || '/'
@@ -44,8 +44,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html'
     }),
-    new webpack.DefinePlugin({
-      process: { env: {} }
+    new Dotenv({
+      path: './.env',
+      safe: true
     })
   ],
   devServer: {
