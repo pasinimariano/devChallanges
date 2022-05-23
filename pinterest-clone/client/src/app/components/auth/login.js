@@ -5,7 +5,7 @@ import { Formik } from 'formik'
 
 import { FormGroup } from '../../public/commons/formGroup'
 import { loginUserSchema } from '../../public/commons/schemas'
-import { loginUser } from '../../redux/features/authSlices'
+import { loginUser } from '../../redux/features/authSlice'
 
 export const Login = () => {
   const loginError = useSelector(state => state.auth.error)

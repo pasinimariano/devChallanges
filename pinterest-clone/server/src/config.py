@@ -1,5 +1,6 @@
 from os import environ
 from dotenv import dotenv_values
+import cloudinary
 
 from db.index import DbConnection
 
@@ -19,6 +20,12 @@ class Config:
     DB_CONNECTION.create_tables()
     DB_CONNECTION.session_connection()
     DB_ENGINE = DB_CONNECTION.get_engine()
+
+    cloudinary.config(
+        cloud_name=ENV['CLOUD_NAME'],
+        api_key=ENV['CLOUD_KEY'],
+        api_secret=ENV['CLOUD_SECRET']
+    )
 
 
 class ProdConfig(Config):

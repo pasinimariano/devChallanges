@@ -22,15 +22,14 @@ class Images(Base):
     __tablename__ = 'images'
     id = Column(UUIDType(binary=False), primary_key=True, nullable=False)
     mimetype = Column(String(150), nullable=False)
-    data = Column(LargeBinary(length=352), nullable=False)
-    render_data = Column(Text(), nullable=False)
+    url = Column(Text(), nullable=False)
     name = Column(Text(), nullable=False)
     title = Column(String(128), nullable=False)
     description = Column(Text(252), nullable=True)
     likes = Column(Integer(), nullable=True)
     posted_at = Column(DateTime())
     update_at = Column(DateTime())
-    owner = Column(UUIDType(binary=False), ForeignKey('users.id'))
+    owner = Column(UUIDType(binary=False), ForeignKey('users.id'), nullable=False)
     comments = relationship('Comments', backref='image_comment')
 
 
@@ -39,6 +38,7 @@ class Comments(Base):
     id = Column(UUIDType(binary=False), primary_key=True, nullable=False)
     post = Column(Text(63206), nullable=False)
     posted_at = Column(DateTime())
+    update_at = Column(DateTime())
     image_id = Column(UUIDType(binary=False), ForeignKey('images.id'))
     owner_id = Column(UUIDType(binary=False), ForeignKey('users.id'))
 

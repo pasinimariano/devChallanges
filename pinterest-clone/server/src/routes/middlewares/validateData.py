@@ -14,7 +14,7 @@ def validate_data(schema):
             res = validator.validate(req, schema)
 
             if res is False:
-                return send_invalid_error('Invalid data', validator.errors)
+                return send_invalid_error(validator.errors)
 
             return func()
         return wrapper
@@ -30,7 +30,7 @@ def validate_post(schema):
             res = validator.validate(req, schema)
 
             if res is False:
-                return send_invalid_error('Invalid data', validator.errors,)
+                return send_invalid_error(validator.errors,)
 
             return func()
         return wrapper

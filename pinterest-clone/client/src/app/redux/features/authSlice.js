@@ -10,7 +10,7 @@ const BASE_URL = process.env.SERVER_BASE_URL
 const LOGIN_URL = process.env.SERVER_LOGIN_URL
 
 export const AuthSlice = createSlice({
-  name: 'login',
+  name: 'auth',
   initialState,
   reducers: {
     logOut: state => {

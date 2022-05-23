@@ -18,12 +18,12 @@ def upload_image_controller(server):
                 title = request.form['title']
 
                 if not req:
-                    return send_invalid_error('Could not upload', 'Image is missing')
+                    return send_invalid_error('Image is missing')
 
                 valid_extension = check_extensions(server, req.filename)
 
                 if valid_extension is False:
-                    return send_invalid_error('Could not upload', 'Image extension not allowed.')
+                    return send_invalid_error('Image extension not allowed.')
 
                 service_user = UserService(server, user_password, _id=user_id)
 
@@ -38,7 +38,7 @@ def upload_image_controller(server):
                     response = service.upload_image(req, title, owner)
 
                     if response['ok'] is False:
-                        return send_invalid_error('Image could`t be created.', response['error'])
+                        return send_invalid_error(response['error'])
 
                     return func()
 
@@ -48,6 +48,7 @@ def upload_image_controller(server):
                 return send_internal_error(error)
 
         return wrapper
+
     return decorator
 
 
@@ -69,8 +70,7 @@ def get_images_controller(server):
                     response = service.get_images(_all=True)
 
                 else:
-                    return send_invalid_error('Could not get images',
-                                              'Server need an argument "_id" with length 32 or "_all" for get images')
+                    return send_invalid_error('Server need an argument "_id" with length 32 or "_all" for get images')
 
                 if response['ok'] is True:
                     return func({'images': response['images']})
@@ -79,4 +79,5 @@ def get_images_controller(server):
                 send_internal_error(error)
 
         return wrapper
+
     return decorator

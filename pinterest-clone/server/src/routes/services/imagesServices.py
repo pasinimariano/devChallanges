@@ -1,9 +1,9 @@
+import cloudinary.uploader
 from uuid import uuid4
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from sqlalchemy.orm import sessionmaker
 
-from ..commons.render_image import render_image
 from ..commons.get_table import get_table
 from ..commons.execute_query import execute_query, format_image
 
@@ -19,16 +19,14 @@ class ImageService:
         try:
             uuid = uuid4().hex
             mimetype = file.mimetype
-            data = file.read(352)
-            render_file = render_image(data)
+            url = cloudinary.uploader.upload(file)
             filename = secure_filename(file.filename)
             datetime_now = datetime.now()
 
             query = self.images_table.insert().values(
                 id=uuid,
                 mimetype=mimetype,
-                data=data,
-                render_data=render_file,
+                url=url["secure_url"],
                 name=filename,
                 title=title,
                 posted_at=datetime_now,
@@ -54,7 +52,7 @@ class ImageService:
                 response = []
 
                 for row in result:
-                    image = format_image(row)
+                    image = {'id': row['id'], 'url': row['url'], 'title': row['title'], 'likes': row['likes']}
                     response.append(image)
 
                 return {'ok': True, 'images': response}
@@ -65,9 +63,7 @@ class ImageService:
                 result = execute_query(self.engine, query)
 
                 for row in result:
-                    image = format_image(row)
-
-                    return {'ok': True, 'images': image}
+                    return {'ok': True, 'images': row}
 
             else:
                 return {'ok': False, 'error': 'Id or All parameter needed'}
