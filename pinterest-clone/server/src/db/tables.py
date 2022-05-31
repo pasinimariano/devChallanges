@@ -2,6 +2,7 @@ from sqlalchemy import Column, Text, String, Integer, DateTime, ForeignKey, Larg
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy_utils import UUIDType
 
+
 Base = declarative_base()
 
 

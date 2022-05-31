@@ -2,7 +2,12 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy_utils import database_exists, create_database
 from sqlalchemy.orm import sessionmaker
 from dotenv import dotenv_values
+from uuid import uuid4
+from urllib.request import urlopen
+from urllib.parse import urlparse
+
 from .tables import create_all_tables
+from .seeders.imagesSeeder import ImageSeeder
 
 ENV = dotenv_values()
 DB_DIALECT = ENV['DB_DIALECT']
@@ -54,3 +59,47 @@ class DbConnection:
     def get_engine(self):
         return self.engine
 
+    def seed_images_table(self):
+        seeder = ImageSeeder(ENV['UNSPLASH_KEY'])
+
+        self.metadata.reflect(bind=self.engine)
+        images_table = self.metadata.tables['images']
+        query = images_table.select()
+        connection = self.engine.connect()
+        result = self.engine.execute(query)
+        response = 0
+
+        for row in result:
+            response += 1
+
+        while response < 100:
+            random_image = seeder.get_random_images()
+            _id = uuid4().hex
+            url = random_image['urls']['full']
+            open_url = urlopen(url)
+            mimetype = open_url.info().get_content_type()
+            parse_url = urlparse(url)
+            name = parse_url.path
+            title = random_image['user']['username'].capitalize()
+            posted_at = random_image['created_at']
+            owner = '446714f7fd8347479f17962bc88f1df0'
+
+            metadata = MetaData()
+            metadata.reflect(bind=self.engine)
+            images_table = metadata.tables['images']
+
+            query = images_table.insert().values(
+                id=_id,
+                mimetype=mimetype,
+                url=url,
+                name=name,
+                title=title,
+                posted_at=posted_at,
+                owner=owner
+            )
+
+            self.engine.execute(query)
+
+            response += 1
+
+        connection.close()
