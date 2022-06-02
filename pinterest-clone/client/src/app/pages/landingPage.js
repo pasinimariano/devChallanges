@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Container } from 'react-bootstrap'
 
 import { Login } from '../components/auth/login'
@@ -16,11 +16,19 @@ export const LandingPage = () => {
     setRender,
     index,
     setIndex,
+    queryImages,
     carouselImages,
     serverError,
     dispatch,
+    getFade,
     handleIndex
   } = Statement()
+
+  useEffect(() => {
+    queryImages.map(image => {
+      getFade(image)
+    })
+  }, [queryImages])
 
   return (
     <MainContainer className='d-flex flex-column justify-content-center'>

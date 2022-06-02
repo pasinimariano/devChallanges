@@ -13,7 +13,7 @@ export const CarouselTitle = styled.h4`
 const fadeUpAnimation = keyframes`${fadeInUp}`
 
 export const FadeText = styled(CarouselTitle)`
-  animation: 1s ${fadeUpAnimation};
+  animation: 2s ${fadeUpAnimation};
   text-align: center;
 `
 
@@ -35,6 +35,9 @@ export const BootstrapStyles = {
   carouselControlSelected: {
     color: Colors.purple,
     margin: '5px'
+  },
+  ImagesContainer: {
+    width: '95%'
   },
   carouselRow: pos => ({
     position: 'relative',

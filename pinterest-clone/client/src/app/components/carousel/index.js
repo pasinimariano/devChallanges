@@ -33,7 +33,7 @@ export const Carousel = ({
         style={{ height: '10vh' }}
         className='d-flex flex-column justify-content-end align-items-center'
       >
-        <FadeText id='subtitle'>{subtitles[index]}</FadeText>
+        <FadeText id='carousel-subtitle'>{subtitles[index]}</FadeText>
         <Container className='d-flex justify-content-center'>
           {subtitles.map(subtitle => {
             const subtitleIndex = subtitles.indexOf(subtitle)
@@ -53,7 +53,7 @@ export const Carousel = ({
       </Container>
       <Container
         fluid
-        style={{ width: '100%' }}
+        style={BootstrapStyles.ImagesContainer}
         className='d-flex flex-row justify-content-around'
       >
         <ImageRow
@@ -61,14 +61,14 @@ export const Carousel = ({
           index={index}
           photo1={1}
           photo2={2}
-          style={BootstrapStyles.carouselRow('350px')}
+          style={BootstrapStyles.carouselRow('200px')}
         />
         <ImageRow
           carouselImages={carouselImages}
           index={index}
           photo1={3}
           photo2={4}
-          style={BootstrapStyles.carouselRow('175px')}
+          style={BootstrapStyles.carouselRow('100px')}
         />
         <ImageRow
           carouselImages={carouselImages}
@@ -95,14 +95,14 @@ export const Carousel = ({
           index={index}
           photo1={10}
           photo2={11}
-          style={BootstrapStyles.carouselRow('175px')}
+          style={BootstrapStyles.carouselRow('100px')}
         />
         <ImageRow
           carouselImages={carouselImages}
           index={index}
           photo1={12}
           photo2={13}
-          style={BootstrapStyles.carouselRow('350px')}
+          style={BootstrapStyles.carouselRow('200px')}
         />
       </Container>
     </Container>
