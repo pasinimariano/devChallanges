@@ -1,17 +1,43 @@
 import { Colors } from '../../mainStyles'
+import { fadeInUp } from 'react-animations/'
+import styled, { keyframes } from 'styled-components'
 
-export const Styles = {
-  mainContainer: {
-    height: '100vh'
+export const MainContainer = styled.div``
+
+export const CarouselTitle = styled.h4`
+  font-weight: bolder;
+  font-size: 60px;
+  margin: 2px;
+`
+
+const fadeUpAnimation = keyframes`${fadeInUp}`
+
+export const FadeText = styled(CarouselTitle)`
+  animation: 1s ${fadeUpAnimation};
+  text-align: center;
+`
+
+export const FadeImage = styled.div`
+  animation: ${props => props.fade}s ${fadeUpAnimation};
+  width: 236px;
+  height: 350px;
+  background-image: url(${props => props.image});
+  background-size: cover;
+  margin-bottom: 10px;
+  border-radius: 20px;
+`
+
+export const BootstrapStyles = {
+  carouselControl: {
+    color: Colors.gray,
+    margin: '5px'
   },
-  form: {
-    backgroundColor: Colors.gray,
-    height: '60vh',
-    width: '484px',
-    borderRadius: '32px',
-    padding: '25px',
+  carouselControlSelected: {
+    color: Colors.purple,
+    margin: '5px'
+  },
+  carouselRow: pos => ({
     position: 'relative',
-    margin: 'auto',
-    boxShadow: 'rgba(0,0,0,0.45) 0px 2px 10px'
-  }
+    bottom: pos ? pos : null
+  })
 }

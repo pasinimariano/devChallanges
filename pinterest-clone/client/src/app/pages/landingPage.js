@@ -1,32 +1,39 @@
 import React from 'react'
-import { Container, Col, Row } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
 
 import { Login } from '../components/auth/login'
+import { Carousel } from '../components/carousel'
+
 import { Statement } from './statements/landingPageStatement'
-import { Styles } from './styles/landingPageStyles.js'
+import { MainContainer } from './styles/landingPageStyles.js'
+import { BootstrapStyles } from './styles/landingPageStyles'
 
 export const LandingPage = () => {
-  const { loginValues, render, setRender, serverError, dispatch } = Statement()
+  const {
+    loginValues,
+    subtitles,
+    render,
+    setRender,
+    index,
+    setIndex,
+    carouselImages,
+    serverError,
+    dispatch,
+    handleIndex
+  } = Statement()
 
   return (
-    <div
-      style={Styles.mainContainer}
-      className='d-flex flex-column justify-content-center'
-    >
-      <Container>
-        <Row className='justify-content-center align-items-center'>
-          <Container style={Styles.form}>
-            {render === 'login' ? (
-              <Login
-                loginValues={loginValues}
-                setRender={setRender}
-                serverError={serverError}
-                dispatch={dispatch}
-              />
-            ) : null}
-          </Container>
-        </Row>
+    <MainContainer className='d-flex flex-column justify-content-center'>
+      <Container fluid style={{ backgroundColor: 'purple', height: '7vh' }}>
+        NAV
       </Container>
-    </div>
+      <Carousel
+        subtitles={subtitles}
+        index={index}
+        carouselImages={carouselImages}
+        handleIndex={handleIndex}
+        BootstrapStyles={BootstrapStyles}
+      />
+    </MainContainer>
   )
 }
