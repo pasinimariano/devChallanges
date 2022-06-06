@@ -14,21 +14,15 @@ export const LandingPage = () => {
     subtitles,
     render,
     setRender,
-    index,
-    setIndex,
+    page,
     queryImages,
+    animation,
     carouselImages,
     serverError,
     dispatch,
     getFade,
-    handleIndex
+    handleEffect
   } = Statement()
-
-  useEffect(() => {
-    queryImages.map(image => {
-      getFade(image)
-    })
-  }, [queryImages])
 
   return (
     <MainContainer className='d-flex flex-column justify-content-center'>
@@ -37,9 +31,12 @@ export const LandingPage = () => {
       </Container>
       <Carousel
         subtitles={subtitles}
-        index={index}
+        queryImages={queryImages}
+        page={page}
+        animation={animation}
         carouselImages={carouselImages}
-        handleIndex={handleIndex}
+        getFade={getFade}
+        handleEffect={handleEffect}
         BootstrapStyles={BootstrapStyles}
       />
     </MainContainer>
