@@ -1,25 +1,32 @@
 import React from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Container } from 'react-bootstrap'
 import { Formik } from 'formik'
 
 import { FormGroup } from '../../public/commons/formGroup'
 import { loginUserSchema } from '../../public/commons/schemas'
 import { loginUser } from '../../redux/features/authSlice'
 
-export const Login = ({ loginValues, setRender, serverError, dispatch }) => {
+export const Login = ({
+  loginValues,
+  setRender,
+  serverError,
+  dispatch,
+  style
+}) => {
   return (
-    <div
-      className='d-flex flex-column justify-content-center align-items-center'
-      style={{ backgroundColor: 'pink', height: '100%' }}
-    >
-      <h3>Log in to see more</h3>
+    <div className='d-flex flex-column justify-content-center align-items-center'>
       <Formik
         initialValues={loginValues}
         validationSchema={loginUserSchema}
         onSubmit={values => dispatch(loginUser(values))}
       >
         {({ handleSubmit, handleChange, values, touched, errors }) => (
-          <Form noValidate onSubmit={handleSubmit}>
+          <Form
+            noValidate
+            onSubmit={handleSubmit}
+            style={style.formContainer}
+            className='d-flex flex-column align-items-center'
+          >
             <FormGroup
               type='email'
               name='email'
@@ -28,6 +35,7 @@ export const Login = ({ loginValues, setRender, serverError, dispatch }) => {
               handleChange={handleChange}
               touched={touched.email}
               errors={errors.email}
+              style={style}
             />
             <FormGroup
               controlId='validationFormikPassword'
@@ -38,12 +46,44 @@ export const Login = ({ loginValues, setRender, serverError, dispatch }) => {
               handleChange={handleChange}
               touched={touched.password}
               errors={errors.password}
+              style={style}
             />
-            <Button type='submit'> Sign in </Button>
-            {serverError ? <h5>{serverError}</h5> : null}
+            <Container className='d-flex flex-column align-items-center'>
+              <Button type='submit' style={style.formButton(false, true)}>
+                Log in
+              </Button>
+              <h5 style={style.or}>OR</h5>
+              <Button style={style.formButton(true, false)}>Google</Button>
+              {serverError ? <h5>{serverError}</h5> : null}
+            </Container>
           </Form>
         )}
       </Formik>
+      <Container
+        className='d-flex justify-content-center'
+        style={style.termsContainer}
+      >
+        <span style={style.span} className='d-flex flex-column'>
+          <span>By continuing, you agree to Pinhunt's</span>
+          <Container>
+            <a
+              href='https://policy.pinterest.com/en/terms-of-service'
+              target='_blank'
+              style={style.href}
+            >
+              Terms of service
+            </a>
+            <span>{` and acknowledge you've read our`}</span>
+          </Container>
+          <a
+            href='https://policy.pinterest.com/en/privacy-policy'
+            target='_blank'
+            style={style.href}
+          >
+            Privacy Policy
+          </a>
+        </span>
+      </Container>
     </div>
   )
 }

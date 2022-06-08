@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
-import { Container } from 'react-bootstrap'
+import React from 'react'
 
 import { Login } from '../components/auth/login'
+import { NavigationLanding } from '../components/navigation/navigationLanding'
 import { Carousel } from '../components/carousel'
 
 import { Statement } from './statements/landingPageStatement'
@@ -14,6 +14,8 @@ export const LandingPage = () => {
     subtitles,
     render,
     setRender,
+    modalShow,
+    setModalShow,
     page,
     queryImages,
     animation,
@@ -26,9 +28,16 @@ export const LandingPage = () => {
 
   return (
     <MainContainer className='d-flex flex-column justify-content-center'>
-      <Container fluid style={{ backgroundColor: 'purple', height: '7vh' }}>
-        NAV
-      </Container>
+      <NavigationLanding
+        render={render}
+        setRender={setRender}
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        loginValues={loginValues}
+        serverError={serverError}
+        dispatch={dispatch}
+        BootstrapStyles={BootstrapStyles}
+      />
       <Carousel
         subtitles={subtitles}
         queryImages={queryImages}

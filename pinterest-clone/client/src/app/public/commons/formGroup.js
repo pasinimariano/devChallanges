@@ -10,10 +10,11 @@ export const FormGroup = ({
   values,
   handleChange,
   touched,
-  errors
+  errors,
+  style
 }) => {
   return (
-    <Form.Group controlId={controlId}>
+    <Form.Group controlId={controlId} style={style.formInput}>
       <Form.Label> {label} </Form.Label>
       <Form.Control
         type={type}
@@ -23,6 +24,7 @@ export const FormGroup = ({
         onChange={handleChange}
         isValid={touched && !errors}
         isInvalid={!!errors}
+        style={style.form}
       />
       <Form.Control.Feedback type='invalid'>{errors}</Form.Control.Feedback>
     </Form.Group>

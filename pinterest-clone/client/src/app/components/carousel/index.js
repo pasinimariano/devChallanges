@@ -28,31 +28,18 @@ export const Carousel = ({
   return (
     <Container
       fluid
-      style={{
-        width: '100vw',
-        height: '93vh',
-        position: 'relative',
-        overflow: 'hidden'
-      }}
+      style={BootstrapStyles.carouselContainer}
       className='d-flex flex-column justify-content-end align-items-center'
     >
       <Container
-        style={{
-          height: '38vh',
-          position: 'absolute',
-          top: '0'
-        }}
+        style={BootstrapStyles.carouselTitleContainer}
         className='d-flex flex-column justify-content-end align-items-center'
       >
         <CarouselTitle>Get yout next</CarouselTitle>
       </Container>
 
       <Container
-        style={{
-          height: '10vh',
-          position: 'absolute',
-          top: '38vh'
-        }}
+        style={BootstrapStyles.carouselSubtitleContainer}
         className='d-flex flex-column justify-content-end align-items-center'
       >
         <FadeText id='carousel-subtitle' page={page}>

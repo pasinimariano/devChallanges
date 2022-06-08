@@ -13,6 +13,7 @@ export const Statement = () => {
     'DIY projects'
   ]
   const [render, setRender] = useState('login')
+  const [modalShow, setModalShow] = useState(true)
   const [page, setPage] = useState(0)
   const [queryImages, setQueryImages] = useState([])
   const [animation, setAnimation] = useState(true)
@@ -132,6 +133,8 @@ export const Statement = () => {
     subtitles,
     render,
     setRender,
+    modalShow,
+    setModalShow,
     page,
     queryImages,
     animation,

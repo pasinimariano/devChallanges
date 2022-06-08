@@ -40,6 +40,34 @@ export const FadeImage = styled.div`
 `
 
 export const BootstrapStyles = {
+  navigationConteiner: {
+    height: '7vh'
+  },
+  buttonNavigation: color => ({
+    backgroundColor: color === 'login' ? Colors.purple : Colors.gray,
+    border: 'none',
+    borderRadius: '20px',
+    margin: '10px',
+    fontWeight: 'bolder',
+    color: color === 'login' ? 'withe' : 'black',
+    width: '100px'
+  }),
+  carouselContainer: {
+    width: '100vw',
+    height: '93vh',
+    position: 'relative',
+    overflow: 'hidden'
+  },
+  carouselTitleContainer: {
+    height: '38vh',
+    position: 'absolute',
+    top: '0'
+  },
+  carouselSubtitleContainer: {
+    height: '10vh',
+    position: 'absolute',
+    top: '38vh'
+  },
   carouselControl: {
     color: Colors.gray,
     margin: '5px'
@@ -65,5 +93,61 @@ export const BootstrapStyles = {
   carouselRow: pos => ({
     position: 'relative',
     bottom: pos ? pos : null
-  })
+  }),
+  modalTitleContainer: {
+    width: '100%'
+  },
+  modalLogo: {
+    height: '55px'
+  },
+  modalTitle: {
+    fontWeight: 'bolder',
+    fontSize: '32px'
+  },
+  formContainer: {
+    width: '90%'
+  },
+  formInput: {
+    width: '70%',
+    borderRadius: '15px',
+    marginBottom: '5px'
+  },
+  form: {
+    borderRadius: '12px'
+  },
+  formButton: (google, margin) => ({
+    border: 'none',
+    borderRadius: '12px',
+    width: '70%',
+    marginTop: margin ? '50px' : null,
+    backgroundColor: google ? Colors.blue : Colors.purple,
+    fontWeight: 'bolder'
+  }),
+  or: {
+    fontWeight: 'bolder',
+    fontSize: '15px',
+    margin: '10px'
+  },
+  termsContainer: {
+    width: '60%',
+    marginTop: '25px',
+    textAlign: 'center'
+  },
+  span: {
+    fontSize: '11px'
+  },
+  href: {
+    textDecoration: 'none',
+    color: 'black',
+    fontWeight: 'bolder'
+  },
+  footer: {
+    fontWeight: 'bolder',
+    fontSize: '12px'
+  },
+  footerHover: {
+    fontWeight: 'bolder',
+    fontSize: '12px',
+    color: Colors.coral
+  }
 }
