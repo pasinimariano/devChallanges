@@ -11,6 +11,7 @@ import { BootstrapStyles } from './styles/landingPageStyles'
 export const LandingPage = () => {
   const {
     loginValues,
+    createValues,
     subtitles,
     render,
     setRender,
@@ -34,6 +35,7 @@ export const LandingPage = () => {
         modalShow={modalShow}
         setModalShow={setModalShow}
         loginValues={loginValues}
+        createValues={createValues}
         serverError={serverError}
         dispatch={dispatch}
         BootstrapStyles={BootstrapStyles}

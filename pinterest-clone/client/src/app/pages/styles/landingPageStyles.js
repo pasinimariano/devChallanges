@@ -104,6 +104,10 @@ export const BootstrapStyles = {
     fontWeight: 'bolder',
     fontSize: '32px'
   },
+  modalSubTitle: {
+    fontWeight: 'bolder',
+    fontSize: '22px'
+  },
   formContainer: {
     width: '90%'
   },

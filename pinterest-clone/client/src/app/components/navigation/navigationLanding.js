@@ -4,6 +4,7 @@ import { Container, Col, Image, Button } from 'react-bootstrap'
 import Logo from '../../assets/logo.png'
 import { ModalAuth } from './modal'
 import { Login } from '../auth/login'
+import { CreateUser } from '../auth/create'
 
 export const NavigationLanding = ({
   render,
@@ -11,6 +12,7 @@ export const NavigationLanding = ({
   modalShow,
   setModalShow,
   loginValues,
+  createValues,
   serverError,
   dispatch,
   BootstrapStyles
@@ -54,7 +56,6 @@ export const NavigationLanding = ({
           body={
             <Login
               loginValues={loginValues}
-              setRender={setRender}
               serverError={serverError}
               dispatch={dispatch}
               style={BootstrapStyles}
@@ -64,25 +65,25 @@ export const NavigationLanding = ({
           show={modalShow}
           onHide={() => setModalShow(false)}
           style={BootstrapStyles}
-          onClick={() => setRender('create')}
+          setRender={setRender}
         />
       ) : (
         <ModalAuth
-          title='OTRO'
+          title='Welcome to Pinhunt'
+          subtitle='Find new ideas to try'
           body={
-            <Login
-              loginValues={loginValues}
-              setRender={setRender}
+            <CreateUser
+              createValues={createValues}
               serverError={serverError}
               dispatch={dispatch}
               style={BootstrapStyles}
             />
           }
-          footer='jaja'
+          footer='create'
           show={modalShow}
           onHide={() => setModalShow(false)}
           style={BootstrapStyles}
-          onClick={() => setRender('create')}
+          setRender={setRender}
         />
       )}
     </Container>

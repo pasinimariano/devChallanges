@@ -3,12 +3,12 @@ import { Modal, Container, Image } from 'react-bootstrap'
 
 import Logo from '../../assets/logoph.png'
 
-const Footer = ({ style, onClick, legend }) => {
+const Footer = ({ style, setRender, option, legend }) => {
   return (
     <Container className='d-flex justify-content-center'>
       <h6
         style={style.footer}
-        onClick={onClick}
+        onClick={() => setRender(option)}
         onMouseOver={e => (e.target.style.color = 'purple')}
         onMouseLeave={e => (e.target.style.color = 'black')}
       >
@@ -34,6 +34,9 @@ export const ModalAuth = props => {
         >
           <Image src={Logo} alt='Logo pinhunt' style={props.style.modalLogo} />
           <h2 style={props.style.modalTitle}> {props.title} </h2>
+          {props.subtitle ? (
+            <h2 style={props.style.modalSubTitle}>{props.subtitle}</h2>
+          ) : null}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>{props.body}</Modal.Body>
@@ -41,10 +44,18 @@ export const ModalAuth = props => {
         {props.footer === 'login' ? (
           <Footer
             style={props.style}
-            onClick={props.onClick}
+            setRender={props.setRender}
+            option='create'
             legend='Not in Pinhunt yet? Sign Up'
           />
-        ) : null}
+        ) : (
+          <Footer
+            style={props.style}
+            setRender={props.setRender}
+            option='login'
+            legend='Already a member? Log in'
+          />
+        )}
       </Modal.Footer>
     </Modal>
   )

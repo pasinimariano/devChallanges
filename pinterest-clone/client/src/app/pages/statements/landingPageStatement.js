@@ -6,6 +6,7 @@ export const Statement = () => {
   // states
 
   const loginValues = { email: '', password: '' }
+  const createValues = { firstname: '', lastname: '', email: '', password: '' }
   const subtitles = [
     'outfits ideas',
     'activity for kids',
@@ -13,7 +14,7 @@ export const Statement = () => {
     'DIY projects'
   ]
   const [render, setRender] = useState('login')
-  const [modalShow, setModalShow] = useState(true)
+  const [modalShow, setModalShow] = useState(false)
   const [page, setPage] = useState(0)
   const [queryImages, setQueryImages] = useState([])
   const [animation, setAnimation] = useState(true)
@@ -130,6 +131,7 @@ export const Statement = () => {
 
   return {
     loginValues,
+    createValues,
     subtitles,
     render,
     setRender,
