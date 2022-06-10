@@ -32,8 +32,11 @@ class UserService:
 
             print(' * {} {} created successfully'.format(self.firstname, self.lastname))
             return {'ok': True}
-        except Exception as error:
-            print(' * Error when trying to create user: {}'.format(error))
+        except Exception as exception:
+            format_error = str(exception.__dict__['orig'])
+            my_slice = slice(6, -1)
+            error = format_error[my_slice]
+            print(' * Error when trying to create user: {}'.format(exception))
             return {'ok': False, 'error': error}
 
     def login_user(self):

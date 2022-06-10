@@ -49,7 +49,9 @@ export const Login = ({ loginValues, serverError, dispatch, style }) => {
               </Button>
               <h5 style={style.or}>OR</h5>
               <Button style={style.formButton(true, false)}>Google</Button>
-              {serverError ? <h5>{serverError}</h5> : null}
+              {serverError ? (
+                <h5 style={style.showError}>{serverError}</h5>
+              ) : null}
             </Container>
           </Form>
         )}

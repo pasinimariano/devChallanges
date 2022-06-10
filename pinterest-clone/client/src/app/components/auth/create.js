@@ -4,6 +4,7 @@ import { Formik } from 'formik'
 
 import { FormGroup } from '../../public/commons/formGroup'
 import { createUserSchema } from '../../public/commons/schemas'
+import { createUser } from '../../redux/features/authSlice'
 import { TermsContainer } from './terms'
 
 export const CreateUser = ({ createValues, serverError, dispatch, style }) => {
@@ -12,7 +13,7 @@ export const CreateUser = ({ createValues, serverError, dispatch, style }) => {
       <Formik
         initialValues={createValues}
         validationSchema={createUserSchema}
-        onSubmit={values => console.log(values)}
+        onSubmit={values => dispatch(createUser(values))}
       >
         {({ handleSubmit, handleChange, values, touched, errors }) => (
           <Form
@@ -68,7 +69,9 @@ export const CreateUser = ({ createValues, serverError, dispatch, style }) => {
               </Button>
               <h5 style={style.or}>OR</h5>
               <Button style={style.formButton(true, false)}>Google</Button>
-              {serverError ? <h5>{serverError}</h5> : null}
+              {serverError ? (
+                <h5 style={style.showError}>{serverError}</h5>
+              ) : null}
             </Container>
           </Form>
         )}

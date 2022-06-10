@@ -153,5 +153,11 @@ export const BootstrapStyles = {
     fontWeight: 'bolder',
     fontSize: '12px',
     color: Colors.coral
+  },
+  showError: {
+    color: Colors.coral,
+    textAlign: 'center',
+    marginTop: '20px',
+    fontSize: '15px'
   }
 }
