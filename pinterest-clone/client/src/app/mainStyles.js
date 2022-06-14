@@ -11,5 +11,7 @@ export const Colors = {
   purple: '#7C3E66',
   green: '#809A6F',
   brown: '#DEA057',
-  violet: '#AC7D88'
+  violet: '#AC7D88',
+  yellow: '#FFE59D',
+  wine: '#7D1E6A'
 }

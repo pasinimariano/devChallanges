@@ -2,7 +2,13 @@ import { Colors } from '../../mainStyles'
 import { fadeInUp, fadeOutUp } from 'react-animations/'
 import styled, { keyframes } from 'styled-components'
 
-export const MainContainer = styled.div``
+export const MainContainer = styled.div`
+  height: 100%;
+`
+
+export const Section = styled.div`
+  height: 100vh;
+`
 
 export const CarouselTitle = styled.h4`
   font-weight: bolder;
@@ -39,9 +45,14 @@ export const FadeImage = styled.div`
   border-radius: 20px;
 `
 
+export const SecondSectionContainer = styled.div`
+  background-color: ${Colors.yellow};
+  height: 100%;
+`
+
 export const BootstrapStyles = {
   navigationConteiner: {
-    height: '7vh'
+    height: '7%'
   },
   buttonNavigation: color => ({
     backgroundColor: color === 'login' ? Colors.purple : Colors.gray,
@@ -54,7 +65,7 @@ export const BootstrapStyles = {
   }),
   carouselContainer: {
     width: '100vw',
-    height: '93vh',
+    height: '93%',
     position: 'relative',
     overflow: 'hidden'
   },
@@ -159,5 +170,59 @@ export const BootstrapStyles = {
     textAlign: 'center',
     marginTop: '20px',
     fontSize: '15px'
+  },
+  secondSectionTitle: {
+    fontSize: '60px',
+    fontWeight: 'bolder',
+    color: Colors.wine
+  },
+  secondSectionSpan: {
+    fontSize: '24px',
+    fontWeight: 'bolder',
+    margin: '15px',
+    width: '50%',
+    textAlign: 'center',
+    color: Colors.wine
+  },
+  secondSectionButton: {
+    backgroundColor: Colors.wine,
+    border: 'none',
+    width: '120px',
+    height: '48px',
+    fontSize: '20px',
+    fontWeight: 'bolder',
+    marginTop: '10px',
+    borderRadius: '25px',
+    color: Colors.yellow
+  },
+  secondSectionImagesContainer: {
+    width: '80%',
+    height: '100%',
+    position: 'relative'
+  },
+  secondSectionImage: (width, height, url, index, top, bottom) => ({
+    position: 'absolute',
+    width: width,
+    height: height,
+    borderRadius: '30px',
+    backgroundImage: `url(${url})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    zIndex: index,
+    top: top,
+    right: bottom
+  }),
+  secondSectionInput: {
+    position: 'absolute',
+    zIndex: 2,
+    width: '450px',
+    height: '100px',
+    backgroundColor: 'white',
+    borderRadius: '50px',
+    right: 150,
+    top: 320
+  },
+  secondSectionIcon: {
+    marginRight: '10px'
   }
 }

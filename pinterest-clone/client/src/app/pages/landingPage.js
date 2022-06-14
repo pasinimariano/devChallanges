@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
-import { Login } from '../components/auth/login'
+import { Section } from './styles/landingPageStyles.js'
 import { NavigationLanding } from '../components/navigation/navigationLanding'
 import { Carousel } from '../components/carousel'
+import { SecondSection } from '../components/landing/secondSection'
 
 import { Statement } from './statements/landingPageStatement'
 import { MainContainer } from './styles/landingPageStyles.js'
@@ -24,32 +25,46 @@ export const LandingPage = () => {
     serverError,
     dispatch,
     getFade,
-    handleEffect
+    handleEffect,
+    handleScroll
   } = Statement()
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
     <MainContainer className='d-flex flex-column justify-content-center'>
-      <NavigationLanding
-        render={render}
-        setRender={setRender}
-        modalShow={modalShow}
-        setModalShow={setModalShow}
-        loginValues={loginValues}
-        createValues={createValues}
-        serverError={serverError}
-        dispatch={dispatch}
-        BootstrapStyles={BootstrapStyles}
-      />
-      <Carousel
-        subtitles={subtitles}
-        queryImages={queryImages}
-        page={page}
-        animation={animation}
-        carouselImages={carouselImages}
-        getFade={getFade}
-        handleEffect={handleEffect}
-        BootstrapStyles={BootstrapStyles}
-      />
+      <Section>
+        <NavigationLanding
+          render={render}
+          setRender={setRender}
+          modalShow={modalShow}
+          setModalShow={setModalShow}
+          loginValues={loginValues}
+          createValues={createValues}
+          serverError={serverError}
+          dispatch={dispatch}
+          BootstrapStyles={BootstrapStyles}
+        />
+        <Carousel
+          subtitles={subtitles}
+          queryImages={queryImages}
+          page={page}
+          animation={animation}
+          carouselImages={carouselImages}
+          getFade={getFade}
+          handleEffect={handleEffect}
+          BootstrapStyles={BootstrapStyles}
+        />
+      </Section>
+      <Section>
+        <SecondSection BootstrapStyles={BootstrapStyles} />
+      </Section>
     </MainContainer>
   )
 }

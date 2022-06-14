@@ -18,10 +18,20 @@ const Footer = ({ style, setRender, option, legend }) => {
   )
 }
 
-export const ModalAuth = props => {
+export const ModalAuth = ({
+  title,
+  subtitle,
+  body,
+  footer,
+  show,
+  onHide,
+  style,
+  setRender
+}) => {
   return (
     <Modal
-      {...props}
+      show={show}
+      onHide={onHide}
       size='md'
       aria-labelledby='contained-modal-title-vcenter'
       centered
@@ -29,29 +39,27 @@ export const ModalAuth = props => {
       <Modal.Header closeButton>
         <Modal.Title
           id='contained-modal-title-vcenter'
-          style={props.style.modalTitleContainer}
+          style={style.modalTitleContainer}
           className='d-flex flex-column align-items-center'
         >
-          <Image src={Logo} alt='Logo pinhunt' style={props.style.modalLogo} />
-          <h2 style={props.style.modalTitle}> {props.title} </h2>
-          {props.subtitle ? (
-            <h2 style={props.style.modalSubTitle}>{props.subtitle}</h2>
-          ) : null}
+          <Image src={Logo} alt='Logo pinhunt' style={style.modalLogo} />
+          <h2 style={style.modalTitle}> {title} </h2>
+          {subtitle ? <h2 style={style.modalSubTitle}>{subtitle}</h2> : null}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>{props.body}</Modal.Body>
+      <Modal.Body>{body}</Modal.Body>
       <Modal.Footer>
-        {props.footer === 'login' ? (
+        {footer === 'login' ? (
           <Footer
-            style={props.style}
-            setRender={props.setRender}
+            style={style}
+            setRender={setRender}
             option='create'
             legend='Not in Pinhunt yet? Sign Up'
           />
         ) : (
           <Footer
-            style={props.style}
-            setRender={props.setRender}
+            style={style}
+            setRender={setRender}
             option='login'
             legend='Already a member? Log in'
           />
