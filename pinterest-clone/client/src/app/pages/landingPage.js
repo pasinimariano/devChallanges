@@ -4,6 +4,8 @@ import { Section } from './styles/landingPageStyles.js'
 import { NavigationLanding } from '../components/navigation/navigationLanding'
 import { Carousel } from '../components/carousel'
 import { SecondSection } from '../components/landing/secondSection'
+import { ThirdSection } from '../components/landing/thirdSection.js'
+import { FourthSection } from '../components/landing/fourthSection'
 
 import { Statement } from './statements/landingPageStatement'
 import { MainContainer } from './styles/landingPageStyles.js'
@@ -64,6 +66,12 @@ export const LandingPage = () => {
       </Section>
       <Section>
         <SecondSection BootstrapStyles={BootstrapStyles} />
+      </Section>
+      <Section>
+        <ThirdSection BootstrapStyles={BootstrapStyles} />
+      </Section>
+      <Section>
+        <FourthSection BootstrapStyles={BootstrapStyles} />
       </Section>
     </MainContainer>
   )

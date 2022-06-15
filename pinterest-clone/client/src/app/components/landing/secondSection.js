@@ -1,12 +1,16 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Button, Col, Container } from 'react-bootstrap'
 import { HiSearch } from 'react-icons/hi'
 
-import { SecondSectionContainer } from '../../pages/styles/landingPageStyles'
+import { SectionContainer } from '../../pages/styles/landingPageStyles'
 
 export const SecondSection = ({ BootstrapStyles }) => {
   return (
-    <SecondSectionContainer className='d-flex justify-content-center align-items-center'>
+    <SectionContainer
+      className='d-flex justify-content-center align-items-center'
+      section='two'
+    >
       <Col
         className='d-flex justify-content-center align-items-center'
         style={{ height: '80%' }}
@@ -18,7 +22,7 @@ export const SecondSection = ({ BootstrapStyles }) => {
           <div
             style={BootstrapStyles.secondSectionImage(
               '38%',
-              '60%',
+              '55%',
               'https://s.pinimg.com/webapp/center-77497603.png',
               1
             )}
@@ -69,13 +73,17 @@ export const SecondSection = ({ BootstrapStyles }) => {
         </Container>
       </Col>
       <Col className='d-flex flex-column justify-content-center align-items-center'>
-        <h2 style={BootstrapStyles.secondSectionTitle}>Search for an idea</h2>
-        <span style={BootstrapStyles.secondSectionSpan}>
+        <h2 style={BootstrapStyles.sectionTitle('wine')}>Search for an idea</h2>
+        <span style={BootstrapStyles.sectionSpan('wine')}>
           What do you want to try next? Think of something you’re into—like
           “easy chicken dinner”—and see what you find.
         </span>
-        <Button style={BootstrapStyles.secondSectionButton}>Explore</Button>
+        <Link to='/home'>
+          <Button style={BootstrapStyles.sectionButton('yellow')}>
+            Explore
+          </Button>
+        </Link>
       </Col>
-    </SecondSectionContainer>
+    </SectionContainer>
   )
 }

@@ -45,9 +45,21 @@ export const FadeImage = styled.div`
   border-radius: 20px;
 `
 
-export const SecondSectionContainer = styled.div`
-  background-color: ${Colors.yellow};
+export const SectionContainer = styled.div`
+  background-color: ${props =>
+    props.section === 'two'
+      ? Colors.yellow
+      : props.section === 'three'
+      ? Colors.blue
+      : 'red'};
   height: 100%;
+`
+
+export const ThirdSectionImageText = styled.h4`
+  color: white;
+  font-size: ${props => props.size};
+  font-weight: bolder;
+  margin-left: ${props => props.margin};
 `
 
 export const BootstrapStyles = {
@@ -171,21 +183,36 @@ export const BootstrapStyles = {
     marginTop: '20px',
     fontSize: '15px'
   },
-  secondSectionTitle: {
+  sectionTitle: color => ({
     fontSize: '60px',
     fontWeight: 'bolder',
-    color: Colors.wine
-  },
-  secondSectionSpan: {
+    color:
+      color === 'wine'
+        ? Colors.wine
+        : color === 'blue'
+        ? Colors.darkBlue
+        : 'red'
+  }),
+  sectionSpan: color => ({
     fontSize: '24px',
     fontWeight: 'bolder',
     margin: '15px',
     width: '50%',
     textAlign: 'center',
-    color: Colors.wine
-  },
-  secondSectionButton: {
-    backgroundColor: Colors.wine,
+    color:
+      color === 'wine'
+        ? Colors.wine
+        : color === 'blue'
+        ? Colors.darkBlue
+        : 'red'
+  }),
+  sectionButton: color => ({
+    backgroundColor:
+      color === 'yellow'
+        ? Colors.wine
+        : color === 'blue'
+        ? Colors.darkBlue
+        : 'red',
     border: 'none',
     width: '120px',
     height: '48px',
@@ -193,8 +220,13 @@ export const BootstrapStyles = {
     fontWeight: 'bolder',
     marginTop: '10px',
     borderRadius: '25px',
-    color: Colors.yellow
-  },
+    color:
+      color === 'yellow'
+        ? Colors.yellow
+        : color === 'blue'
+        ? Colors.blue
+        : 'red'
+  }),
   secondSectionImagesContainer: {
     width: '80%',
     height: '100%',
@@ -224,5 +256,16 @@ export const BootstrapStyles = {
   },
   secondSectionIcon: {
     marginRight: '10px'
-  }
+  },
+  thirdSectionImageContainer: (width, height, margin, url) => ({
+    width: width,
+    height: height,
+    marginLeft: margin,
+    backgroundImage: `url(${url})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'end'
+  })
 }
