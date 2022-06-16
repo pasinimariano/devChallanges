@@ -129,22 +129,6 @@ export const Statement = () => {
     }, 6000)
   }
 
-  const handleScroll = () => {
-    const scroll = window.scrollY
-    console.log(scroll)
-    if (scroll === 1) {
-      window.scrollTo({
-        top: 1020,
-        behavior: 'smooth'
-      })
-    } else if (scroll === 1019) {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-      })
-    }
-  }
-
   return {
     loginValues,
     createValues,
@@ -160,7 +144,6 @@ export const Statement = () => {
     serverError,
     dispatch,
     getFade,
-    handleEffect,
-    handleScroll
+    handleEffect
   }
 }

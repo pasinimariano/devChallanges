@@ -51,7 +51,9 @@ export const SectionContainer = styled.div`
       ? Colors.yellow
       : props.section === 'three'
       ? Colors.blue
-      : 'red'};
+      : props.section === 'fourth'
+      ? 'pink'
+      : 'black'};
   height: 100%;
 `
 
@@ -191,7 +193,9 @@ export const BootstrapStyles = {
         ? Colors.wine
         : color === 'blue'
         ? Colors.darkBlue
-        : 'red'
+        : color === 'pink'
+        ? Colors.coral
+        : 'black'
   }),
   sectionSpan: color => ({
     fontSize: '24px',
@@ -204,7 +208,9 @@ export const BootstrapStyles = {
         ? Colors.wine
         : color === 'blue'
         ? Colors.darkBlue
-        : 'red'
+        : color === 'pink'
+        ? Colors.coral
+        : 'black'
   }),
   sectionButton: color => ({
     backgroundColor:
@@ -212,7 +218,9 @@ export const BootstrapStyles = {
         ? Colors.wine
         : color === 'blue'
         ? Colors.darkBlue
-        : 'red',
+        : color === 'pink'
+        ? Colors.coral
+        : 'black',
     border: 'none',
     width: '120px',
     height: '48px',
@@ -225,7 +233,9 @@ export const BootstrapStyles = {
         ? Colors.yellow
         : color === 'blue'
         ? Colors.blue
-        : 'red'
+        : color === 'pink'
+        ? 'pink'
+        : 'black'
   }),
   secondSectionImagesContainer: {
     width: '80%',
@@ -267,5 +277,39 @@ export const BootstrapStyles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'end'
+  }),
+  fourthSectionImageContainer: {
+    height: '100%',
+    backgroundImage: `url('https://s.pinimg.com/webapp/shop-bd0c8a04.png')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center'
+  },
+  fourthSectionImagePosition: {
+    height: '50%',
+    width: '100%',
+    position: 'relative'
+  },
+  fourthSectionImage: {
+    height: '383px',
+    width: '215px',
+    borderRadius: '20px',
+    backgroundImage: `url('https://s.pinimg.com/webapp/creator-pin-img-491ebb56.png')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    position: 'absolute',
+    left: '100px'
+  },
+  fourthSectionAvatar: {
+    position: 'absolute',
+    top: '320px',
+    left: '50px'
+  },
+  fourthSectionText: (top, left) => ({
+    position: ' absolute',
+    top: top,
+    left: left,
+    color: 'white',
+    fontSize: '18px',
+    fontWeight: 'bolder'
   })
 }

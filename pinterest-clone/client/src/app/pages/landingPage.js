@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { Section } from './styles/landingPageStyles.js'
 import { NavigationLanding } from '../components/navigation/navigationLanding'
@@ -27,17 +27,8 @@ export const LandingPage = () => {
     serverError,
     dispatch,
     getFade,
-    handleEffect,
-    handleScroll
+    handleEffect
   } = Statement()
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
 
   return (
     <MainContainer className='d-flex flex-column justify-content-center'>
