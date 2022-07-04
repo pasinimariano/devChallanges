@@ -20,7 +20,7 @@ export const NavigationLanding = ({
   return (
     <Container
       fluid
-      style={BootstrapStyles.navigationConteiner}
+      style={BootstrapStyles.navigationContainer}
       className='d-flex align-items-center'
     >
       <Col>

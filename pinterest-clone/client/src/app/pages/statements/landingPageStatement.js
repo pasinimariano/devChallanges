@@ -129,6 +129,10 @@ export const Statement = () => {
     }, 6000)
   }
 
+  const scrollTop = () => {
+    console.log('scrolling bug')
+  }
+
   return {
     loginValues,
     createValues,
@@ -144,6 +148,7 @@ export const Statement = () => {
     serverError,
     dispatch,
     getFade,
-    handleEffect
+    handleEffect,
+    scrollTop
   }
 }

@@ -8,7 +8,7 @@ export const RoutesWeb = ({ user }) => {
   return (
     <Routes>
       <Route exact path='/' element={<LandingPage />} />
-      <Route exact path='/home' element={<HomePage />} />
+      <Route exact path='/home' element={<HomePage userState={user} />} />
     </Routes>
   )
 }

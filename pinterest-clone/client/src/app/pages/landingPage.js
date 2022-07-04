@@ -6,6 +6,7 @@ import { Carousel } from '../components/carousel'
 import { SecondSection } from '../components/landing/secondSection'
 import { ThirdSection } from '../components/landing/thirdSection.js'
 import { FourthSection } from '../components/landing/fourthSection'
+import { FifthSection } from '../components/landing/fifthSection.js'
 
 import { Statement } from './statements/landingPageStatement'
 import { MainContainer } from './styles/landingPageStyles.js'
@@ -27,7 +28,8 @@ export const LandingPage = () => {
     serverError,
     dispatch,
     getFade,
-    handleEffect
+    handleEffect,
+    scrollTop
   } = Statement()
 
   return (
@@ -63,6 +65,18 @@ export const LandingPage = () => {
       </Section>
       <Section>
         <FourthSection BootstrapStyles={BootstrapStyles} />
+      </Section>
+      <Section>
+        <FifthSection
+          render={render}
+          setRender={setRender}
+          loginValues={loginValues}
+          createValues={createValues}
+          serverError={serverError}
+          dispatch={dispatch}
+          scrollTop={scrollTop}
+          BootstrapStyles={BootstrapStyles}
+        />
       </Section>
     </MainContainer>
   )

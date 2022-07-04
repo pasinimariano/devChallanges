@@ -1,6 +1,7 @@
-import { Colors } from '../../mainStyles'
 import { fadeInUp, fadeOutUp } from 'react-animations/'
 import styled, { keyframes } from 'styled-components'
+
+import { Colors } from '../../mainStyles'
 
 export const MainContainer = styled.div`
   height: 100%;
@@ -53,8 +54,9 @@ export const SectionContainer = styled.div`
       ? Colors.blue
       : props.section === 'fourth'
       ? 'pink'
-      : 'black'};
+      : 'white'};
   height: 100%;
+  width: '100vh';
 `
 
 export const ThirdSectionImageText = styled.h4`
@@ -64,8 +66,19 @@ export const ThirdSectionImageText = styled.h4`
   margin-left: ${props => props.margin};
 `
 
+export const ButtonToTop = styled.button`
+  position: absolute;
+  bottom: 1%;
+  height: 25px;
+  width: 200px;
+  background-color: ${Colors.wine};
+  border-radius: 8px;
+  color: white;
+  font-weight: bolder;
+`
+
 export const BootstrapStyles = {
-  navigationConteiner: {
+  navigationContainer: {
     height: '7%'
   },
   buttonNavigation: color => ({
@@ -127,11 +140,13 @@ export const BootstrapStyles = {
   },
   modalTitle: {
     fontWeight: 'bolder',
-    fontSize: '32px'
+    fontSize: '32px',
+    textAlign: 'center'
   },
   modalSubTitle: {
     fontWeight: 'bolder',
-    fontSize: '22px'
+    fontSize: '22px',
+    textAlign: 'center'
   },
   formContainer: {
     width: '90%'
@@ -311,5 +326,29 @@ export const BootstrapStyles = {
     color: 'white',
     fontSize: '18px',
     fontWeight: 'bolder'
-  })
+  }),
+  fifthSectionContainer: {
+    backgroundImage: `url('http://store-images.s-microsoft.com/image/apps.54654.14204669951057618.66f35ee3-03b9-46a6-b185-b9ce0ffda2f4.eeff01db-b986-4e3b-b0de-7da6baf143eb')`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    height: '100%',
+    width: '90%'
+  },
+  cardContainer: {
+    width: '55%',
+    height: '100%',
+    backgroundColor: 'white',
+    borderRadius: '20px'
+  },
+  cardImg: {
+    width: '10%',
+    marginTop: '20px'
+  },
+  cardFooter: {
+    width: '100%',
+    height: '10%',
+    borderBottomLeftRadius: '20px',
+    borderBottomRightRadius: '20px',
+    backgroundColor: 'white'
+  }
 }

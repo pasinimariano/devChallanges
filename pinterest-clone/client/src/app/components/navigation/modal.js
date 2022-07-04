@@ -1,9 +1,9 @@
 import React from 'react'
-import { Modal, Container, Image } from 'react-bootstrap'
+import { Modal, Container, Image, Card } from 'react-bootstrap'
 
 import Logo from '../../assets/logoph.png'
 
-const Footer = ({ style, setRender, option, legend }) => {
+export const Footer = ({ style, setRender, option, legend }) => {
   return (
     <Container className='d-flex justify-content-center'>
       <h6
