@@ -5,12 +5,12 @@ import { SmoothScroll } from './components/smoothScroll'
 import { RoutesWeb } from './routesWeb'
 
 export const App = () => {
-  const userState = useSelector(state => state.auth.logged)
+  const loggedState = useSelector(state => state.auth.logged)
 
   return (
     <div>
       <SmoothScroll />
-      <RoutesWeb user={userState} />
+      <RoutesWeb logged={loggedState} />
     </div>
   )
 }

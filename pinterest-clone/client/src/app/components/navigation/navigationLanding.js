@@ -5,6 +5,7 @@ import Logo from '../../assets/logo.png'
 import { ModalAuth } from './modal'
 import { Login } from '../auth/login'
 import { CreateUser } from '../auth/create'
+import { ManageModal } from './manageModal'
 
 export const NavigationLanding = ({
   render,
@@ -50,42 +51,17 @@ export const NavigationLanding = ({
           Sign up
         </Button>
       </Col>
-      {render === 'login' ? (
-        <ModalAuth
-          title='Welcome to Pinhunt'
-          body={
-            <Login
-              loginValues={loginValues}
-              serverError={serverError}
-              dispatch={dispatch}
-              style={BootstrapStyles}
-            />
-          }
-          footer='login'
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          style={BootstrapStyles}
-          setRender={setRender}
-        />
-      ) : (
-        <ModalAuth
-          title='Welcome to Pinhunt'
-          subtitle='Find new ideas to try'
-          body={
-            <CreateUser
-              createValues={createValues}
-              serverError={serverError}
-              dispatch={dispatch}
-              style={BootstrapStyles}
-            />
-          }
-          footer='create'
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          style={BootstrapStyles}
-          setRender={setRender}
-        />
-      )}
+      <ManageModal
+        render={render}
+        setRender={setRender}
+        modalShow={modalShow}
+        setModalShow={setModalShow}
+        loginValues={loginValues}
+        createValues={createValues}
+        serverError={serverError}
+        dispatch={dispatch}
+        BootstrapStyles={BootstrapStyles}
+      />
     </Container>
   )
 }

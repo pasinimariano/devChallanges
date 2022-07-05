@@ -28,6 +28,9 @@ export const AuthSlice = createSlice({
     },
     setError: (state, action) => {
       state.error = action.payload
+    },
+    delError: state => {
+      state.error = ''
     }
   }
 })
@@ -58,5 +61,9 @@ export const createUser = data => async dispatch => {
   }
 }
 
-export const { logIn, logOut, create, setError } = AuthSlice.actions
+export const clearError = () => dispatch => {
+  dispatch(delError())
+}
+
+export const { logIn, logOut, create, setError, delError } = AuthSlice.actions
 export default AuthSlice.reducer

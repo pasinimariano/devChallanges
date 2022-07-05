@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { Section } from './styles/landingPageStyles.js'
 import { NavigationLanding } from '../components/navigation/navigationLanding'
@@ -11,8 +11,9 @@ import { FifthSection } from '../components/landing/fifthSection.js'
 import { Statement } from './statements/landingPageStatement'
 import { MainContainer } from './styles/landingPageStyles.js'
 import { BootstrapStyles } from './styles/landingPageStyles'
+import { Alert } from 'react-bootstrap'
 
-export const LandingPage = () => {
+export const LandingPage = ({ logged }) => {
   const {
     loginValues,
     createValues,
@@ -27,13 +28,28 @@ export const LandingPage = () => {
     carouselImages,
     serverError,
     dispatch,
+    navigate,
     getFade,
     handleEffect,
     scrollTop
   } = Statement()
 
+  useEffect(() => {
+    if (logged) {
+      setModalShow(false)
+
+      setTimeout(() => navigate('/home'), 2000)
+    }
+  }, [logged, navigate])
+
   return (
     <MainContainer className='d-flex flex-column justify-content-center'>
+      {logged ? (
+        <Alert variant='success'>
+          {`Welcome to Pinhunt ${logged.user.firstname}`}
+        </Alert>
+      ) : null}
+
       <Section>
         <NavigationLanding
           render={render}

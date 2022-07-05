@@ -1,10 +1,10 @@
 import $ from 'jquery'
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 export const Statement = () => {
   // states
-
   const loginValues = { email: '', password: '' }
   const createValues = { firstname: '', lastname: '', email: '', password: '' }
   const subtitles = [
@@ -85,6 +85,7 @@ export const Statement = () => {
 
   const serverError = useSelector(state => state.auth.error)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   // management
 
@@ -147,6 +148,7 @@ export const Statement = () => {
     carouselImages,
     serverError,
     dispatch,
+    navigate,
     getFade,
     handleEffect,
     scrollTop

@@ -4,11 +4,11 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { LandingPage } from './pages/landingPage'
 import { HomePage } from './pages/homePage'
 
-export const RoutesWeb = ({ user }) => {
+export const RoutesWeb = ({ logged }) => {
   return (
     <Routes>
-      <Route exact path='/' element={<LandingPage />} />
-      <Route exact path='/home' element={<HomePage userState={user} />} />
+      <Route exact path='/' element={<LandingPage logged={logged} />} />
+      <Route exact path='/home' element={<HomePage logged={logged} />} />
     </Routes>
   )
 }

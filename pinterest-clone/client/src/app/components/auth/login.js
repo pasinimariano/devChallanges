@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Form, Button, Container } from 'react-bootstrap'
 import { Formik } from 'formik'
 
 import { FormGroup } from '../../public/commons/formGroup'
 import { loginUserSchema } from '../../public/commons/schemas'
-import { loginUser } from '../../redux/features/authSlice'
+import { loginUser, clearError } from '../../redux/features/authSlice'
 import { TermsContainer } from './terms'
 
 export const Login = ({ loginValues, serverError, dispatch, style }) => {
+  useEffect(() => {
+    if (serverError) {
+      setTimeout(() => dispatch(clearError()), 6000)
+    }
+  }, [serverError])
+
   return (
     <div className='d-flex flex-column justify-content-center align-items-center'>
       <Formik

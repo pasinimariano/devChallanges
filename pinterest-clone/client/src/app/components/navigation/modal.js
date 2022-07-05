@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Container, Image, Card } from 'react-bootstrap'
+import { Modal, Container, Image } from 'react-bootstrap'
 
 import Logo from '../../assets/logoph.png'
 
