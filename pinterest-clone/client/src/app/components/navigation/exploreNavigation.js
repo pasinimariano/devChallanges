@@ -13,7 +13,7 @@ import {
 } from '../../pages/styles/homePageStyles'
 
 export const ExploreNavigation = ({
-  userState,
+  logged,
   exploreInput,
   setRender,
   setModalShow,
@@ -50,7 +50,9 @@ export const ExploreNavigation = ({
         </div>
       </Col>
       <Col lg={2} className='d-flex justify-content-end'>
-        {userState ? null : (
+        {logged ? (
+          <h2>Estoy log</h2>
+        ) : (
           <AuthButtons
             setRender={setRender}
             setModalShow={setModalShow}

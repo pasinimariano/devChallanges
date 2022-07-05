@@ -3687,14 +3687,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react-use-scroll-snap@^0.0.4":
-  "integrity" "sha512-IVnGldU13ZM5NkiBNudXFVsyDuF8u99zjYhGsy+fsS75CvcD//apT0Qn1YTEUQ/QDB21K8NPM8psFpTIKeay2Q=="
-  "resolved" "https://registry.npmjs.org/react-use-scroll-snap/-/react-use-scroll-snap-0.0.4.tgz"
-  "version" "0.0.4"
-  dependencies:
-    "tweezer.js" "^1.5.0"
-
-"react@*", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@^18.1.0", "react@>= 16.8.0", "react@>=0.14.0", "react@>=15.0.0", "react@>=16.14.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0", "react@>=16.8.1":
+"react@*", "react@^16.8 || ^17.0 || ^18.0", "react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^16.9.0 || ^17.0.0 || ^18", "react@^18.1.0", "react@>= 16.8.0", "react@>=0.14.0", "react@>=15.0.0", "react@>=16.14.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0":
   "integrity" "sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.1.0.tgz"
   "version" "18.1.0"
@@ -3737,12 +3730,17 @@
   dependencies:
     "resolve" "^1.9.0"
 
+"redux-persist@^6.0.0":
+  "integrity" "sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ=="
+  "resolved" "https://registry.npmjs.org/redux-persist/-/redux-persist-6.0.0.tgz"
+  "version" "6.0.0"
+
 "redux-thunk@^2.4.1":
   "integrity" "sha512-OOYGNY5Jy2TWvTL1KgAlVy6dcx3siPJ1wTq741EPyUKfn6W6nChdICjZwCd0p8AZBs5kWpZlbkXW2nE/zjUa+Q=="
   "resolved" "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.4.1.tgz"
   "version" "2.4.1"
 
-"redux@^4", "redux@^4.1.2":
+"redux@^4", "redux@^4.1.2", "redux@>4.0.0":
   "integrity" "sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA=="
   "resolved" "https://registry.npmjs.org/redux/-/redux-4.2.0.tgz"
   "version" "4.2.0"
@@ -4290,11 +4288,6 @@
   "integrity" "sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz"
   "version" "2.4.0"
-
-"tweezer.js@^1.5.0":
-  "integrity" "sha512-aSiJz7rGWNAQq7hjMK9ZYDuEawXupcCWgl3woQQSoDP2Oh8O4srWb/uO1PzzHIsrPEOqrjJ2sUb9FERfzuBabQ=="
-  "resolved" "https://registry.npmjs.org/tweezer.js/-/tweezer.js-1.5.0.tgz"
-  "version" "1.5.0"
 
 "type-is@~1.6.18":
   "integrity" "sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g=="

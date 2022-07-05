@@ -7,7 +7,7 @@ import { ManageModal } from '../components/navigation/manageModal'
 import { Statement } from './statements/homePageStatement'
 import { BootstrapStyles } from './styles/homePageStyles'
 
-export const HomePage = ({ userState }) => {
+export const HomePage = ({ logged }) => {
   const {
     exploreInput,
     render,
@@ -25,7 +25,7 @@ export const HomePage = ({ userState }) => {
   return (
     <MainContainer>
       <ExploreNavigation
-        userState={userState}
+        logged={logged}
         exploreInput={exploreInput}
         render={render}
         setRender={setRender}
