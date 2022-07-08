@@ -1,5 +1,5 @@
 from uuid import uuid4
-from datetime import datetime
+import cloudinary.uploader
 
 from ..commons.get_table import get_table
 
@@ -16,16 +16,13 @@ class UserService:
 
     def create_new_user(self):
         try:
-            uuid = uuid4().hex
-            datetime_now = datetime.now()
-
+            id_generator = uuid4().hex
             query = self.user_table.insert().values(
-                id=uuid,
+                id=id_generator,
                 firstname=self.firstname,
                 lastname=self.lastname,
                 email=self.email,
                 password=self.password,
-                created_at=datetime_now
             )
             self.engine.connect()
             self.engine.execute(query)
@@ -55,20 +52,54 @@ class UserService:
         self.engine.execute(query)
         return 'User {} deleted'.format(self.email)
 
-    def update_user(self, password):
-        datetime_now = datetime.now()
-        query = self.user_table.update().where(self.user_table.c.id == self._id).values(
-            email=self.email,
-            firstname=self.firstname,
-            lastname=self.lastname,
-            password=password,
-            updated_at=datetime_now
-        )
-        self.engine.connect()
-        self.engine.execute(query)
-        return 'User {} updated successfully'.format(self._id)
+    def update_user(self):
+        try:
+            query = self.user_table.update().where(self.user_table.c.id == self._id).values(
+                email=self.email,
+                firstname=self.firstname,
+                lastname=self.lastname,
+            )
+            self.engine.connect()
+            self.engine.execute(query)
 
+            response = self.login_user()
 
+            print(' * User {} updated successfully'.format(self._id))
+            return {'ok': True, 'user': response}
 
+        except Exception as error:
+            print(' * Error when trying to update user: {}'.format(error))
+            return {'ok': False, 'error': error}
+
+    def update_password(self, password):
+        try:
+            query = self.user_table.update().where(self.user_table.c.id == self._id).values(
+                password=password
+            )
+            self.engine.connect()
+            self.engine.execute(query)
+            return {'ok': True, 'msg': 'Password updated successfully'}
+
+        except Exception as error:
+            print(' * Error when trying to update password: {}'. format(error))
+            return {'ok': False, 'error': error}
+
+    def update_profile_picture(self, image):
+        try:
+            url = cloudinary.uploader.upload(image)
+            query = self.user_table.update().where(self.user_table.c.id == self._id).values(
+                profile_picture=url["secure_url"]
+            )
+            self.engine.connect()
+            self.engine.execute(query)
+
+            response = self.login_user()
+
+            print(' * Profile picture {} updated successfully'.format(self._id))
+            return {'ok': True, 'user': response}
+
+        except Exception as error:
+            print(' * Error when trying to update profile image: {}'.format(error))
+            return {'ok': False, 'error': error}
 
 

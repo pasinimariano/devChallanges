@@ -1,47 +1,65 @@
-from sqlalchemy import Column, Text, String, Integer, DateTime, ForeignKey, LargeBinary
+from sqlalchemy import Table, Column, Text, String, Integer, DateTime, ForeignKey
 from sqlalchemy.orm import declarative_base, relationship
-from sqlalchemy_utils import UUIDType
-
+from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.sql import func
+from uuid import uuid4
 
 Base = declarative_base()
+
+association_board_pin = Table(
+    'association',
+    Base.metadata,
+    Column('pin_id', ForeignKey('pines.id')),
+    Column('board_id', ForeignKey('boards.id'))
+)
 
 
 class Users(Base):
     __tablename__ = 'users'
-    id = Column(UUIDType(binary=False), primary_key=True, nullable=False)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     firstname = Column(String(50), nullable=False)
     lastname = Column(String(50), nullable=False)
     email = Column(String(128), nullable=False, unique=True)
     password = Column(String(128), nullable=False)
-    created_at = Column(DateTime(), nullable=False)
-    updated_at = Column(DateTime(), nullable=True)
-    images = relationship('Images', backref='owner')
-    comments = relationship('Comments', backref='comment_owner')
+    profile_picture = Column(Text(), nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    user_pines = relationship('Pines', backref='owner')
+    user_comments = relationship('Comments', backref='owner')
+    user_boards = relationship('Boards', backref='owner')
 
 
-class Images(Base):
-    __tablename__ = 'images'
-    id = Column(UUIDType(binary=False), primary_key=True, nullable=False)
+class Pines(Base):
+    __tablename__ = 'pines'
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     mimetype = Column(String(150), nullable=False)
     url = Column(Text(), nullable=False)
     name = Column(Text(), nullable=False)
-    title = Column(String(128), nullable=False)
-    description = Column(Text(252), nullable=True)
+    title = Column(String(150), nullable=False)
+    description = Column(Text(), nullable=True)
     likes = Column(Integer(), nullable=True)
-    posted_at = Column(DateTime())
-    update_at = Column(DateTime())
-    owner = Column(UUIDType(binary=False), ForeignKey('users.id'), nullable=False)
-    comments = relationship('Comments', backref='image_comment')
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    owner = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
+    comments = relationship('Comments', backref='comment')
 
 
 class Comments(Base):
     __tablename__ = 'comments'
-    id = Column(UUIDType(binary=False), primary_key=True, nullable=False)
-    post = Column(Text(63206), nullable=False)
-    posted_at = Column(DateTime())
-    update_at = Column(DateTime())
-    image_id = Column(UUIDType(binary=False), ForeignKey('images.id'))
-    owner_id = Column(UUIDType(binary=False), ForeignKey('users.id'))
+    id = Column(UUID(as_uuid=True), primary_key=True, nullable=False, default=uuid4)
+    post = Column(Text(), nullable=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    image = Column(UUID(as_uuid=True), ForeignKey('pines.id'), nullable=False)
+    owner = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
+
+
+class Boards(Base):
+    __tablename__ = 'boards'
+    id = Column(UUID(as_uuid=True), primary_key=True, nullable=False, default=uuid4)
+    title = Column(String(128))
+    owner = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
+    pines = relationship('Pines', secondary=association_board_pin)
 
 
 def create_all_tables(engine):

@@ -13,23 +13,19 @@ class ImageService:
         self.server = server
         self.engine = server.config['DB_ENGINE']
         self.session = sessionmaker(self.engine)
-        self.images_table = get_table(self.engine, 'images')
+        self.images_table = get_table(self.engine, 'pines')
 
     def upload_image(self, file, title, owner):
         try:
-            uuid = uuid4().hex
             mimetype = file.mimetype
             url = cloudinary.uploader.upload(file)
             filename = secure_filename(file.filename)
-            datetime_now = datetime.now()
 
             query = self.images_table.insert().values(
-                id=uuid,
                 mimetype=mimetype,
                 url=url["secure_url"],
                 name=filename,
                 title=title,
-                posted_at=datetime_now,
                 owner=owner.id
             )
 

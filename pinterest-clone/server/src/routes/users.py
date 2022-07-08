@@ -1,8 +1,9 @@
 from flask import make_response, jsonify
 
-from .middlewares.validateData import validate_data
+from .middlewares.validateData import validate_data, validate_profile_picture
 from .middlewares.token_validator import token_validator
 from .commons.schemas import create_user_schema, login_user_schema, update_user_schema
+from .commons.schemas import update_password_schema, update_picture_schema
 from .controllers.usersController import *
 
 
@@ -45,3 +46,22 @@ def users_routes(server):
             200
         )
 
+    @server.route('/user/password', methods=['PUT'])
+    @token_validator(server)
+    @validate_data(update_password_schema)
+    @update_password_controller(server)
+    def update_password(response):
+        return make_response(
+            response,
+            200
+        )
+
+    @server.route('/user/picture', methods=['PUT'])
+    @token_validator(server)
+    @validate_profile_picture(update_picture_schema)
+    @update_picture_controller(server)
+    def update_picture(response):
+        return make_response(
+            response,
+            200
+        )
