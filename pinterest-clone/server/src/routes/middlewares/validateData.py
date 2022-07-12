@@ -38,14 +38,19 @@ def validate_profile_picture(schema):
     return decorator
 
 
-def validate_post(schema):
+def validate_pin_post(schema):
     def decorator(func):
         @wraps(func)
         def wrapper():
             validator = Validator()
-            image = request.files
+            pin = request.files
             form = request.form
-            req = {'id': form['id'], 'password': form['password'], 'image': image['image']}
+            req = {
+                'user_id': form['user_id'],
+                'user_password': form['user_password'],
+                'title': form['title'],
+                'pin': pin['pin_file']
+            }
             res = validator.validate(req, schema)
 
             if res is False:

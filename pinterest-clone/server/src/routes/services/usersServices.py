@@ -86,7 +86,7 @@ class UserService:
 
     def update_profile_picture(self, image):
         try:
-            url = cloudinary.uploader.upload(image)
+            url = cloudinary.uploader.upload(image, folder='profile_pictures')
             query = self.user_table.update().where(self.user_table.c.id == self._id).values(
                 profile_picture=url["secure_url"]
             )

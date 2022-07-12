@@ -38,9 +38,10 @@ update_picture_schema = {
     'image': {'required': True}
 }
 
-upload_image_schema = {
+upload_pin_schema = {
     'user_id': {'required': True},
     'user_password': {'minlength': 8, 'maxlength': 128, 'required': True, 'regex': r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)['
                                                                                    r'a-zA-Z\d]{8,128}$'},
-    'title': {'minlength': 5, 'maxlength': 128, 'required': True}
+    'title': {'minlength': 5, 'maxlength': 128, 'required': True},
+    'pin': {'required': True}
 }
