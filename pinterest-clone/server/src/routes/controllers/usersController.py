@@ -30,10 +30,11 @@ def create_user_controller(server):
                 if new_user['ok'] is False:
                     return send_invalid_error(new_user['error'])
 
+                return func(new_user['msg'])
+
             except Exception as error:
                 return send_internal_error(error)
 
-            return func()
         return wrapper
     return decorator
 
@@ -54,7 +55,10 @@ def login_user_controller(server):
 
                 login = service.login_user()
 
-                valid_user = valid_user_data(login, password)
+                if login['ok'] is False:
+                    return send_invalid_error(login['error'])
+
+                valid_user = valid_user_data(login['user'], password)
 
                 if valid_user is True:
 
@@ -63,9 +67,9 @@ def login_user_controller(server):
                     if token['ok'] is False:
                         send_internal_error(token['error'])
 
-                    user_id, user_firstname = login[0], login[1]
-                    user_lastname, user_email = login[2], login[3]
-                    profile_picture = login[5]
+                    user_id, user_firstname = login['user'][0], login['user'][1]
+                    user_lastname, user_email = login['user'][2], login['user'][3]
+                    profile_picture = login['user'][5]
 
                     response = {
                         'token': token['token'],
@@ -103,15 +107,20 @@ def delete_user_controller(server):
                     email
                 )
 
-                user = service.login_user()
+                login = service.login_user()
 
-                valid_user = valid_user_data(user, password)
+                if login['ok'] is False:
+                    return send_invalid_error(login['error'])
+
+                valid_user = valid_user_data(login['user'], password)
 
                 if valid_user is True:
-
                     user_delete = service.delete_user()
 
-                    return func(user_delete)
+                    if user_delete['ok'] is False:
+                        return send_invalid_error(user_delete['error'])
+
+                    return func(user_delete['msg'])
 
                 return valid_user
 
@@ -140,9 +149,12 @@ def update_user_controller(server):
                     _id
                 )
 
-                user = service.login_user()
+                login = service.login_user()
 
-                valid_user = valid_user_data(user, password)
+                if login['ok'] is False:
+                    return send_invalid_error(login['error'])
+
+                valid_user = valid_user_data(login['user'], password)
 
                 if valid_user is True:
                     update = service.update_user()
@@ -188,9 +200,12 @@ def update_password_controller(server):
                     _id=_id,
                 )
 
-                user = service.login_user()
+                login = service.login_user()
 
-                valid_user = valid_user_data(user, password)
+                if login['ok'] is False:
+                    return send_invalid_error(login['error'])
+
+                valid_user = valid_user_data(login['user'], password)
 
                 if valid_user is True:
                     hashed_password = hash_password(new_password)
@@ -222,9 +237,12 @@ def update_picture_controller(server):
                     _id=_id
                 )
 
-                user = service.login_user()
+                login = service.login_user()
 
-                valid_user = valid_user_data(user, password)
+                if login['ok'] is False:
+                    return send_invalid_error(login['error'])
+
+                valid_user = valid_user_data(login['user'], password)
 
                 if valid_user is True:
                     update = service.update_profile_picture(image)

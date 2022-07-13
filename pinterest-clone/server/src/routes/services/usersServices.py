@@ -2,12 +2,14 @@ from uuid import uuid4
 import cloudinary.uploader
 
 from ..commons.get_table import get_table
+from ..commons.execute_query import execute_query
 
 
 class UserService:
     def __init__(self, server, password, email=None, firstname=None, lastname=None, _id=None):
         self.engine = server.config['DB_ENGINE']
         self.user_table = get_table(self.engine, 'users')
+        self.likes_table = get_table(self.engine, 'likes')
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
@@ -24,11 +26,12 @@ class UserService:
                 email=self.email,
                 password=self.password,
             )
-            self.engine.connect()
-            self.engine.execute(query)
+
+            execute_query(self.engine, query)
 
             print(' * {} {} created successfully'.format(self.firstname, self.lastname))
-            return {'ok': True}
+            return {'ok': True, 'msg': 'User created successfully'}
+
         except Exception as exception:
             format_error = str(exception.__dict__['orig'])
             my_slice = slice(6, -1)
@@ -37,20 +40,34 @@ class UserService:
             return {'ok': False, 'error': error}
 
     def login_user(self):
-        if self._id is None:
-            query = self.user_table.select().where(self.user_table.c.email == self.email)
-        else:
-            query = self.user_table.select().where(self.user_table.c.id == self._id)
+        try:
+            if self._id is None:
+                query = self.user_table\
+                    .join(self.likes_table, self.user_table.c.id == self.likes_table.c.owner)\
+                    .select().where(self.user_table.c.email == self.email)
+            else:
+                query = self.user_table\
+                    .join(self.likes_table, self.user_table.c.id == self.likes_table.c.owner)\
+                    .select().where(self.user_table.c.id == self._id)
 
-        self.engine.connect()
-        for row in self.engine.execute(query):
-            return row
+            self.engine.connect()
+            for row in self.engine.execute(query):
+                print(row)
+                return {'ok': True, 'user': row}
+
+        except Exception as error:
+            return {'ok': False, 'error': error}
 
     def delete_user(self):
-        query = self.user_table.delete().where(self.user_table.c.email == self.email)
-        self.engine.connect()
-        self.engine.execute(query)
-        return 'User {} deleted'.format(self.email)
+        try:
+            query = self.user_table.delete().where(self.user_table.c.email == self.email)
+
+            execute_query(self.engine, query)
+
+            return {'ok': True, 'msg': 'User {} deleted'.format(self.email)}
+
+        except Exception as error:
+            return {'ok': False, 'error': error}
 
     def update_user(self):
         try:
@@ -59,8 +76,8 @@ class UserService:
                 firstname=self.firstname,
                 lastname=self.lastname,
             )
-            self.engine.connect()
-            self.engine.execute(query)
+
+            execute_query(self.engine, query)
 
             response = self.login_user()
 
@@ -76,8 +93,9 @@ class UserService:
             query = self.user_table.update().where(self.user_table.c.id == self._id).values(
                 password=password
             )
-            self.engine.connect()
-            self.engine.execute(query)
+
+            execute_query(self.engine, query)
+
             return {'ok': True, 'msg': 'Password updated successfully'}
 
         except Exception as error:
@@ -90,8 +108,8 @@ class UserService:
             query = self.user_table.update().where(self.user_table.c.id == self._id).values(
                 profile_picture=url["secure_url"]
             )
-            self.engine.connect()
-            self.engine.execute(query)
+
+            execute_query(self.engine, query)
 
             response = self.login_user()
 

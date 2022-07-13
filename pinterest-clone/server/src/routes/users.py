@@ -11,9 +11,9 @@ def users_routes(server):
     @server.route('/user/create', methods=['POST'])
     @validate_data(create_user_schema)
     @create_user_controller(server)
-    def create():
+    def create(response):
         return make_response(
-            'User {} created successfully'.format(request.json['email']),
+            response,
             200
         )
 

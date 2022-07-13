@@ -9,7 +9,7 @@ Base = declarative_base()
 association_board_pin = Table(
     'association',
     Base.metadata,
-    Column('pin_id', ForeignKey('pines.id')),
+    Column('pin_id', ForeignKey('pins.id')),
     Column('board_id', ForeignKey('boards.id'))
 )
 
@@ -24,24 +24,32 @@ class Users(Base):
     profile_picture = Column(Text(), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
-    user_pines = relationship('Pines', backref='owner')
+    user_pins = relationship('Pins', backref='owner')
+    user_likes = relationship('Likes', backref='owner')
     user_comments = relationship('Comments', backref='owner')
     user_boards = relationship('Boards', backref='owner')
 
 
-class Pines(Base):
-    __tablename__ = 'pines'
+class Pins(Base):
+    __tablename__ = 'pins'
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
     mimetype = Column(String(150), nullable=False)
     url = Column(Text(), nullable=False)
     name = Column(Text(), nullable=False)
     title = Column(String(150), nullable=False)
     description = Column(Text(), nullable=True)
-    likes = Column(Integer(), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     owner = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
-    comments = relationship('Comments', backref='comment')
+    comments = relationship('Comments', backref='pin')
+    likes = relationship('Likes', backref='pin')
+
+
+class Likes(Base):
+    __tablename__ = 'likes'
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid4)
+    owner = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
+    pin = Column(UUID(as_uuid=True), ForeignKey('pins.id'), nullable=False)
 
 
 class Comments(Base):
@@ -50,7 +58,7 @@ class Comments(Base):
     post = Column(Text(), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
-    image = Column(UUID(as_uuid=True), ForeignKey('pines.id'), nullable=False)
+    image = Column(UUID(as_uuid=True), ForeignKey('pins.id'), nullable=False)
     owner = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
 
 
@@ -59,7 +67,7 @@ class Boards(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, nullable=False, default=uuid4)
     title = Column(String(128))
     owner = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
-    pines = relationship('Pines', secondary=association_board_pin)
+    pins = relationship('Pins', secondary=association_board_pin)
 
 
 def create_all_tables(engine):

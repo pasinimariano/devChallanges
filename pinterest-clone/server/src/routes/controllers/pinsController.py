@@ -35,7 +35,7 @@ def upload_pin_controller(server):
 
                     service = PinsService(server, owner=owner)
 
-                    response = service.upload_image(pin_file, title)
+                    response = service.upload_pin(pin_file, title)
 
                     if response['ok'] is False:
                         return send_invalid_error(response['error'])
@@ -125,5 +125,58 @@ def update_data_controller(server):
 
             except Exception as error:
                 send_internal_error(error)
+        return wrapper
+    return decorator
+
+
+def update_pin_controller(server):
+    def decorator(func):
+        @wraps(func)
+        def wrapper():
+            try:
+                pin_file = request.files['pin_file']
+                _id = request.args.get('id')
+
+                if not pin_file:
+                    return send_invalid_error('File is missing')
+
+                if not _id:
+                    return send_invalid_error('Id is missing')
+
+                service = PinsService(server, _id=_id)
+
+                response = service.update_pin(pin_file)
+
+                if response['ok'] is False:
+                    return send_invalid_error(response['error'])
+
+                return func(response['pin'])
+
+            except Exception as error:
+                send_internal_error(error)
+        return wrapper
+    return decorator
+
+
+def delete_pin_controller(server):
+    def decorator(func):
+        @wraps(func)
+        def wrapper():
+            try:
+                req = request.json
+                _id = req['id']
+
+                service = PinsService(server, _id=_id)
+
+                response = service.delete_pin()
+
+                if response['ok'] is False:
+                    return send_invalid_error(response['error'])
+
+                return func(response['msg'])
+
+            except Exception as error:
+                send_internal_error(error)
+
         return wrapper
     return decorator

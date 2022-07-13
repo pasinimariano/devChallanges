@@ -1,23 +1,22 @@
 import cloudinary.uploader
 from uuid import uuid4
 from werkzeug.utils import secure_filename
-from sqlalchemy.orm import sessionmaker
 
 from ..commons.get_table import get_table
-from ..commons.execute_query import execute_query, format_image
+from ..commons.execute_query import execute_query
 
 
 class PinsService:
     def __init__(self, server, owner=None, _id=None):
         self.server = server
         self.engine = server.config['DB_ENGINE']
-        self.session = sessionmaker(self.engine)
         self.pins_table = get_table(self.engine, 'pines')
         self.owners_table = get_table(self.engine, 'users')
+        self.likes_table = get_table(self.engine, 'likes')
         self.owner = owner
         self._id = _id
 
-    def upload_image(self, file, title):
+    def upload_pin(self, file, title):
         try:
             id_generator = uuid4().hex
             mimetype = file.mimetype
@@ -101,8 +100,7 @@ class PinsService:
                 description=description
             )
 
-            self.engine.connect()
-            self.engine.execute(query)
+            execute_query(self.engine, query)
 
             response = self.get_pin_by_id()
 
@@ -125,8 +123,7 @@ class PinsService:
                 name=filename,
             )
 
-            self.engine.connect()
-            self.engine.execute(query)
+            execute_query(self.engine, query)
 
             response = self.get_pin_by_id()
 
@@ -134,5 +131,17 @@ class PinsService:
             return {'ok': True, 'pin': response}
 
         except Exception as error:
-            print(' * Error when trying to update pin: {}'. format(error))
+            print(' * Error when trying to update pin: {}'.format(error))
+            return {'ok': False, 'error': error}
+
+    def delete_pin(self):
+        try:
+            query = self.pins_table.delete().where(self.pins_table.c.id == self._id)
+
+            execute_query(self.engine, query)
+
+            return {'ok': True, 'msg': 'Pin deleted successfully'}
+
+        except Exception as error:
+            print(' * Error when trying to delete pin: {}'.format(error))
             return {'ok': False, 'error': error}

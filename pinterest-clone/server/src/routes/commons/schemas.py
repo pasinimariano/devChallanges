@@ -45,3 +45,8 @@ upload_pin_schema = {
     'title': {'minlength': 5, 'maxlength': 128, 'required': True},
     'pin': {'required': True}
 }
+
+like_pin_schema = {
+    'user_id': {'required': True},
+    'pin_id': {'required': True}
+}
