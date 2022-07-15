@@ -29,11 +29,11 @@ def upload_pin_controller(server):
 
                 owner = service_user.login_user()
 
-                valid_user = valid_user_data(owner, user_password)
+                valid_user = valid_user_data(owner['user'], user_password)
 
                 if valid_user is True:
 
-                    service = PinsService(server, owner=owner)
+                    service = PinsService(server, owner=owner['user'])
 
                     response = service.upload_pin(pin_file, title)
 
@@ -67,7 +67,7 @@ def get_all_controller(server):
                 return func(response['pins'])
 
             except Exception as error:
-                send_internal_error(error)
+                return send_internal_error(error)
 
         return wrapper
 
@@ -94,7 +94,7 @@ def get_by_id_controller(server):
                 return func(response['pin'])
 
             except Exception as error:
-                send_internal_error(error)
+                return send_internal_error(error)
         return wrapper
     return decorator
 
@@ -124,7 +124,7 @@ def update_data_controller(server):
                 return func(response['pin'])
 
             except Exception as error:
-                send_internal_error(error)
+                return send_internal_error(error)
         return wrapper
     return decorator
 
@@ -153,7 +153,7 @@ def update_pin_controller(server):
                 return func(response['pin'])
 
             except Exception as error:
-                send_internal_error(error)
+                return send_internal_error(error)
         return wrapper
     return decorator
 
@@ -166,6 +166,9 @@ def delete_pin_controller(server):
                 req = request.json
                 _id = req['id']
 
+                if not _id:
+                    return send_invalid_error('Id is missing')
+
                 service = PinsService(server, _id=_id)
 
                 response = service.delete_pin()
@@ -176,7 +179,7 @@ def delete_pin_controller(server):
                 return func(response['msg'])
 
             except Exception as error:
-                send_internal_error(error)
+                return send_internal_error(error)
 
         return wrapper
     return decorator

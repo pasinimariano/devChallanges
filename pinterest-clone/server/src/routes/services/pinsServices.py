@@ -10,9 +10,10 @@ class PinsService:
     def __init__(self, server, owner=None, _id=None):
         self.server = server
         self.engine = server.config['DB_ENGINE']
-        self.pins_table = get_table(self.engine, 'pines')
+        self.pins_table = get_table(self.engine, 'pins')
         self.owners_table = get_table(self.engine, 'users')
         self.likes_table = get_table(self.engine, 'likes')
+        self.comment_table = get_table(self.engine, 'comments')
         self.owner = owner
         self._id = _id
 
@@ -48,16 +49,24 @@ class PinsService:
 
             result = execute_query(self.engine, query)
             response = []
+            pin_likes = []
 
             for row in result:
+                query_likes = self.likes_table.select().where(self.likes_table.c.pin == row['id'])
+                execution = execute_query(self.engine, query_likes)
+
+                if execution:
+                    for likes in execution:
+                        pin_likes.append(likes['id'])
+
                 owner = '{} {}'.format(row['firstname'], row['lastname'])
                 pin = {
                     'id': row['id'],
                     'url': row['url'],
                     'title': row['title'],
-                    'likes': row['likes'],
                     'owner': owner,
-                    'owner_picture': row['profile_picture']
+                    'owner_picture': row['profile_picture'],
+                    'likes': pin_likes
                 }
                 response.append(pin)
 
@@ -74,17 +83,34 @@ class PinsService:
                 .select().where(self.pins_table.c.id == self._id)
 
             result = execute_query(self.engine, query)
+            pin_likes = []
+            pin_comments = []
 
             for row in result:
+                query_likes = self.likes_table.select().where(self.likes_table.c.pin == row['id'])
+                query_likes_execution = execute_query(self.engine, query_likes)
+
+                query_comments = self.comment_table.select().where(self.comment_table.c.pin == row['id'])
+                query_comments_execution = execute_query(self.engine, query_comments)
+
+                if query_likes_execution:
+                    for likes in query_likes_execution:
+                        pin_likes.append(likes['id'])
+
+                if query_comments_execution:
+                    for comments in query_comments_execution:
+                        pin_comments.append(comments['post'])
+
                 owner = '{} {}'.format(row['firstname'], row['lastname'])
                 pin = {
                     'id': row['id'],
                     'url': row['url'],
                     'title': row['title'],
-                    'likes': row['likes'],
                     'description': row['description'],
                     'owner': owner,
-                    'owner_picture': row['profile_picture']
+                    'owner_picture': row['profile_picture'],
+                    'likes': pin_likes,
+                    'comments': pin_comments
                 }
 
                 return {'ok': True, 'pin': pin}

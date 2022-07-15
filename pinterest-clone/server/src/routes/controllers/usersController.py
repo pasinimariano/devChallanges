@@ -70,6 +70,7 @@ def login_user_controller(server):
                     user_id, user_firstname = login['user'][0], login['user'][1]
                     user_lastname, user_email = login['user'][2], login['user'][3]
                     profile_picture = login['user'][5]
+                    likes = login['likes']
 
                     response = {
                         'token': token['token'],
@@ -78,12 +79,13 @@ def login_user_controller(server):
                             'firstname': user_firstname,
                             'lastname': user_lastname,
                             'email': user_email,
-                            'picture': profile_picture
+                            'picture': profile_picture,
+                            'likes': likes
                         }
                     }
 
                     return func(response)
-
+                
                 return valid_user
 
             except Exception as error:

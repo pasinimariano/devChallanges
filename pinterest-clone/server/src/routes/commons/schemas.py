@@ -50,3 +50,14 @@ like_pin_schema = {
     'user_id': {'required': True},
     'pin_id': {'required': True}
 }
+
+add_comment_schema = {
+    'post': {'required': True, 'minlength': 8},
+    'pin_id': {'required': True},
+    'user_id': {'required': True}
+}
+
+put_comment_schema = {
+    'post': {'required': True, 'minlength': 8},
+    'comment_id': {'required': True}
+}

@@ -58,7 +58,7 @@ class Comments(Base):
     post = Column(Text(), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
-    image = Column(UUID(as_uuid=True), ForeignKey('pins.id'), nullable=False)
+    pin = Column(UUID(as_uuid=True), ForeignKey('pins.id'), nullable=False)
     owner = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
 
 

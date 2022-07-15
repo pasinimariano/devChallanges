@@ -23,7 +23,7 @@ def like_pin_controller(server):
                 return func(like['msg'])
 
             except Exception as error:
-                send_internal_error(error)
+                return send_internal_error(error)
 
         return wrapper
     return decorator
@@ -47,18 +47,7 @@ def deslike_pin_controller(server):
                 return func(deslike['msg'])
 
             except Exception as error:
-                send_internal_error(error)
+                return send_internal_error(error)
 
         return wrapper
     return decorator
-
-
-def get_pin_likes_controller(server):
-    def decorator(func):
-        @wraps(func)
-        def wrapper():
-            try:
-                print('pepe')
-
-            except Exception as error:
-                send_internal_error(error)

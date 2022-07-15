@@ -42,18 +42,22 @@ class UserService:
     def login_user(self):
         try:
             if self._id is None:
-                query = self.user_table\
-                    .join(self.likes_table, self.user_table.c.id == self.likes_table.c.owner)\
-                    .select().where(self.user_table.c.email == self.email)
+                query = self.user_table.select().where(self.user_table.c.email == self.email)
             else:
-                query = self.user_table\
-                    .join(self.likes_table, self.user_table.c.id == self.likes_table.c.owner)\
-                    .select().where(self.user_table.c.id == self._id)
+                query = self.user_table.select().where(self.user_table.c.id == self._id)
 
-            self.engine.connect()
-            for row in self.engine.execute(query):
-                print(row)
-                return {'ok': True, 'user': row}
+            result = execute_query(self.engine, query)
+            user_likes = []
+
+            for row in result:
+                query_likes = self.likes_table.select().where(self.likes_table.c.owner == row['id'])
+                execution = execute_query(self.engine, query_likes)
+
+                if execution:
+                    for likes in execution:
+                        user_likes.append(likes['id'])
+
+                return {'ok': True, 'user': row, 'likes': user_likes}
 
         except Exception as error:
             return {'ok': False, 'error': error}

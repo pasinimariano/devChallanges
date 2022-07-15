@@ -38,9 +38,9 @@ class LikesServices:
                 self.likes_table.c.id == self.like_id
             )
 
-            execute_query(query)
+            execute_query(self.engine, query)
 
-            return {'ok': False, 'msg': 'Pin desliked'}
+            return {'ok': True, 'msg': 'Pin desliked'}
 
         except Exception as error:
             return {'ok': False, 'error': error}
