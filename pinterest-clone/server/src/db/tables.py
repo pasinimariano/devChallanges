@@ -9,8 +9,8 @@ Base = declarative_base()
 association_board_pin = Table(
     'association',
     Base.metadata,
-    Column('pin_id', ForeignKey('pins.id')),
-    Column('board_id', ForeignKey('boards.id'))
+    Column('pin_id', ForeignKey('pins.id'), nullable=False),
+    Column('board_id', ForeignKey('boards.id'), nullable=False)
 )
 
 
@@ -65,9 +65,9 @@ class Comments(Base):
 class Boards(Base):
     __tablename__ = 'boards'
     id = Column(UUID(as_uuid=True), primary_key=True, nullable=False, default=uuid4)
-    title = Column(String(128))
+    title = Column(String(128), nullable=False)
     owner = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
-    pins = relationship('Pins', secondary=association_board_pin)
+    pins = relationship('Pins', secondary=association_board_pin, backref='boards')
 
 
 def create_all_tables(engine):

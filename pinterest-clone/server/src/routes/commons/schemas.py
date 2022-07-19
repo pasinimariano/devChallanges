@@ -61,3 +61,8 @@ put_comment_schema = {
     'post': {'required': True, 'minlength': 8},
     'comment_id': {'required': True}
 }
+
+add_pin_schema = {
+    'board_id': {'required': True},
+    'pin_id': {'required': True}
+}

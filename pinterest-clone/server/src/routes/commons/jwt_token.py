@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 def create_token(email, secret_key):
     try:
         payload = {
-            'exp': datetime.utcnow() + timedelta(minutes=25),
+            'exp': datetime.utcnow() + timedelta(minutes=40),
             'iat': datetime.utcnow(),
             'sub': email
         }
