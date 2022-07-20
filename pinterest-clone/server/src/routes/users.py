@@ -42,7 +42,7 @@ def users_routes(server):
     @update_user_controller(server)
     def update(response):
         return make_response(
-            response,
+            jsonify(response),
             200
         )
 
@@ -62,6 +62,6 @@ def users_routes(server):
     @update_picture_controller(server)
     def update_picture(response):
         return make_response(
-            response,
+            jsonify(response),
             200
         )

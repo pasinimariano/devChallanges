@@ -6,7 +6,7 @@ def valid_user_data(login, password):
     if login is None:
         return send_invalid_error('User does`t exist')
 
-    valid_password = verify_password(password, login[4])
+    valid_password = verify_password(password, login)
 
     if valid_password is False:
         return send_invalid_error('Incorrect password')

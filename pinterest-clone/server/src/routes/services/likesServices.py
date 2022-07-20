@@ -6,7 +6,6 @@ from ..commons.execute_query import execute_query
 
 class LikesServices:
     def __init__(self, server, user_id=None, pin_id=None, like_id=None):
-        self.server = server
         self.engine = server.config['DB_ENGINE']
         self.likes_table = get_table(self.engine, 'likes')
         self.user_id = user_id
@@ -27,7 +26,7 @@ class LikesServices:
 
             print(' * Like created at {}'.format(result))
             print(' * Pin {} Liked'.format(self.pin_id))
-            return {'ok': True, 'msg': 'Pin liked'}
+            return {'ok': True, 'msg': 'Success'}
 
         except Exception as error:
             return {'ok': False, 'error': error}
@@ -40,7 +39,9 @@ class LikesServices:
 
             execute_query(self.engine, query)
 
-            return {'ok': True, 'msg': 'Pin desliked'}
+            print(' * Pin desliked')
+            print(' * Pin {} Desliked'.format(self.pin_id))
+            return {'ok': True, 'msg': 'Success'}
 
         except Exception as error:
             return {'ok': False, 'error': error}

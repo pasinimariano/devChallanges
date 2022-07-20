@@ -58,7 +58,10 @@ def login_user_controller(server):
                 if login['ok'] is False:
                     return send_invalid_error(login['error'])
 
-                valid_user = valid_user_data(login['user'], password)
+                if bool(login['user']) is False:
+                    return send_invalid_error('User doesn`t exist')
+
+                valid_user = valid_user_data(login['password'], password)
 
                 if valid_user is True:
 
@@ -67,25 +70,10 @@ def login_user_controller(server):
                     if token['ok'] is False:
                         send_internal_error(token['error'])
 
-                    user_id, user_firstname = login['user'][0], login['user'][1]
-                    user_lastname, user_email = login['user'][2], login['user'][3]
-                    profile_picture = login['user'][5]
-                    likes = login['likes']
+                    login['user']['token'] = token['token']
 
-                    response = {
-                        'token': token['token'],
-                        'user': {
-                            '_id': user_id,
-                            'firstname': user_firstname,
-                            'lastname': user_lastname,
-                            'email': user_email,
-                            'picture': profile_picture,
-                            'likes': likes
-                        }
-                    }
+                    return func(login['user'])
 
-                    return func(response)
-                
                 return valid_user
 
             except Exception as error:
@@ -114,7 +102,10 @@ def delete_user_controller(server):
                 if login['ok'] is False:
                     return send_invalid_error(login['error'])
 
-                valid_user = valid_user_data(login['user'], password)
+                if bool(login['user']) is False:
+                    return send_invalid_error('User doesn`t exist')
+
+                valid_user = valid_user_data(login['password'], password)
 
                 if valid_user is True:
                     user_delete = service.delete_user()
@@ -156,28 +147,18 @@ def update_user_controller(server):
                 if login['ok'] is False:
                     return send_invalid_error(login['error'])
 
-                valid_user = valid_user_data(login['user'], password)
+                if bool(login['user']) is False:
+                    return send_invalid_error('User doesn`t exist')
+
+                valid_user = valid_user_data(login['password'], password)
 
                 if valid_user is True:
                     update = service.update_user()
 
-                    if update['ok'] is True:
-                        user_firstname, user_lastname = update['user'][1], update['user'][2]
-                        user_email = update['user'][3]
+                    if update['ok'] is False:
+                        return send_invalid_error(update['error'])
 
-                        response = {
-                            'msg': 'User updated successfully',
-                            'user': {
-                                'firstname': user_firstname,
-                                'lastname': user_lastname,
-                                'email': user_email,
-                            }
-                        }
-
-                        return func(response)
-
-                    else:
-                        send_invalid_error(update['error'])
+                    return func(update['user'])
 
                 return valid_user
 
@@ -207,13 +188,16 @@ def update_password_controller(server):
                 if login['ok'] is False:
                     return send_invalid_error(login['error'])
 
-                valid_user = valid_user_data(login['user'], password)
+                if bool(login['user']) is False:
+                    return send_invalid_error('User doesn`t exist')
+
+                valid_user = valid_user_data(login['password'], password)
 
                 if valid_user is True:
                     hashed_password = hash_password(new_password)
                     response = service.update_password(hashed_password)
 
-                    return func(response)
+                    return func(response['msg'])
 
                 return valid_user
 
@@ -244,23 +228,18 @@ def update_picture_controller(server):
                 if login['ok'] is False:
                     return send_invalid_error(login['error'])
 
-                valid_user = valid_user_data(login['user'], password)
+                if bool(login['user']) is False:
+                    return send_invalid_error('User doesn`t exist')
+
+                valid_user = valid_user_data(login['password'], password)
 
                 if valid_user is True:
                     update = service.update_profile_picture(image)
 
-                    if update['ok'] is True:
-                        profile_picture = update['user'][5]
-
-                        response = {
-                            'msg': 'Profile picture updated successfully',
-                            'profile:picture': profile_picture
-                        }
-
-                        return func(response)
-
-                    else:
+                    if update['ok'] is False:
                         send_invalid_error(update['error'])
+
+                    return func(update)
 
                 return valid_user
 

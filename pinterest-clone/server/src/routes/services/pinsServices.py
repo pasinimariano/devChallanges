@@ -1,6 +1,7 @@
 import cloudinary.uploader
 from uuid import uuid4
 from werkzeug.utils import secure_filename
+from sqlalchemy import select
 
 from ..commons.get_table import get_table
 from ..commons.execute_query import execute_query
@@ -8,7 +9,6 @@ from ..commons.execute_query import execute_query
 
 class PinsService:
     def __init__(self, server, owner=None, _id=None):
-        self.server = server
         self.engine = server.config['DB_ENGINE']
         self.pins_table = get_table(self.engine, 'pins')
         self.owners_table = get_table(self.engine, 'users')
@@ -37,7 +37,7 @@ class PinsService:
 
             print(' * Image created at {}'.format(result))
             print(' * Image {} created successfully'.format(filename))
-            return {'ok': True}
+            return {'ok': True, 'msg': 'Success'}
 
         except Exception as error:
             print(' * Error when trying to create image: {}'.format(error))
@@ -45,31 +45,36 @@ class PinsService:
 
     def get_all_pins(self):
         try:
-            query = self.pins_table.join(self.owners_table, self.pins_table.c.owner == self.owners_table.c.id).select()
+            query = self.pins_table\
+                .join(self.owners_table, self.pins_table.c.owner == self.owners_table.c.id, isouter=True)\
+                .join(self.likes_table, self.likes_table.c.pin == self.pins_table.c.id, isouter=True)
 
-            result = execute_query(self.engine, query)
-            response = []
-            pin_likes = []
+            select_rows = select(
+                self.pins_table.c.id,
+                self.pins_table.c.url,
+                self.pins_table.c.title,
+                self.owners_table.c.firstname,
+                self.owners_table.c.lastname,
+                self.likes_table.c.id
+            ).select_from(query)
+
+            result = execute_query(self.engine, select_rows)
+            response = {}
 
             for row in result:
-                query_likes = self.likes_table.select().where(self.likes_table.c.pin == row['id'])
-                execution = execute_query(self.engine, query_likes)
+                if row['id'] in response:
+                    response[row['id']]['likes'].append(row['id_1'])
 
-                if execution:
-                    for likes in execution:
-                        pin_likes.append(likes['id'])
+                else:
+                    owner = '{} {}'.format(row['firstname'], row['lastname'])
+                    response[row['id']] = {
+                        'url': row['url'],
+                        'title': row['title'],
+                        'owner': owner,
+                        'likes': [row['id_1']]
+                    }
 
-                owner = '{} {}'.format(row['firstname'], row['lastname'])
-                pin = {
-                    'id': row['id'],
-                    'url': row['url'],
-                    'title': row['title'],
-                    'owner': owner,
-                    'owner_picture': row['profile_picture'],
-                    'likes': pin_likes
-                }
-                response.append(pin)
-
+            print(' * Pins successfully obtained')
             return {'ok': True, 'pins': response}
 
         except Exception as error:
@@ -78,42 +83,38 @@ class PinsService:
 
     def get_pin_by_id(self):
         try:
-            query = self.pins_table\
-                .join(self.owners_table, self.pins_table.c.owner == self.owners_table.c.id)\
+            query = self.pins_table \
+                .join(self.owners_table, self.owners_table.c.id == self.pins_table.c.owner)\
+                .join(self.likes_table, self.likes_table.c.pin == self.pins_table.c.id, isouter=True)\
+                .join(self.comment_table, self.comment_table.c.pin == self.pins_table.c.id, isouter=True)\
                 .select().where(self.pins_table.c.id == self._id)
 
             result = execute_query(self.engine, query)
-            pin_likes = []
-            pin_comments = []
+            response = {}
 
             for row in result:
-                query_likes = self.likes_table.select().where(self.likes_table.c.pin == row['id'])
-                query_likes_execution = execute_query(self.engine, query_likes)
+                if row['id'] in response and row['id_2']:
+                    print('entre')
+                    response[row['id']]['likes'].append(row['id_2'])
 
-                query_comments = self.comment_table.select().where(self.comment_table.c.pin == row['id'])
-                query_comments_execution = execute_query(self.engine, query_comments)
+                elif row['id'] in response and row['post']:
+                    response[row['id']]['comments'].append(row['post'])
 
-                if query_likes_execution:
-                    for likes in query_likes_execution:
-                        pin_likes.append(likes['id'])
+                else:
+                    owner = '{} {}'.format(row['firstname'], row['lastname'])
+                    response[row['id']] = {
+                        'url': row['url'],
+                        'title': row['title'],
+                        'description': row['description'],
+                        'created_at': row['created_at'],
+                        'owner': owner,
+                        'owner_picture': row['profile_picture'],
+                        'likes': [row['id_2']],
+                        'comments': [row['post']]
+                    }
 
-                if query_comments_execution:
-                    for comments in query_comments_execution:
-                        pin_comments.append(comments['post'])
-
-                owner = '{} {}'.format(row['firstname'], row['lastname'])
-                pin = {
-                    'id': row['id'],
-                    'url': row['url'],
-                    'title': row['title'],
-                    'description': row['description'],
-                    'owner': owner,
-                    'owner_picture': row['profile_picture'],
-                    'likes': pin_likes,
-                    'comments': pin_comments
-                }
-
-                return {'ok': True, 'pin': pin}
+            print(' * Pin successfully obtained')
+            return {'ok': True, 'pin': response}
 
         except Exception as error:
             print(' * Error when trying to get pin: {}'.format(error))
@@ -121,7 +122,9 @@ class PinsService:
 
     def update_pin_data(self, title, description=None):
         try:
-            query = self.pins_table.update().where(self.pins_table.c.id == self._id).values(
+            query = self.pins_table.update()\
+                .where(self.pins_table.c.id == self._id)\
+                .values(
                 title=title,
                 description=description
             )
@@ -143,7 +146,9 @@ class PinsService:
             url = cloudinary.uploader.upload(file, folder='pines')
             filename = secure_filename(file.filename)
 
-            query = self.pins_table.update().where(self.pins_table.c.id == self._id).values(
+            query = self.pins_table.update()\
+                .where(self.pins_table.c.id == self._id).\
+                values(
                 mimetype=mimetype,
                 url=url["secure_url"],
                 name=filename,
@@ -162,11 +167,12 @@ class PinsService:
 
     def delete_pin(self):
         try:
-            query = self.pins_table.delete().where(self.pins_table.c.id == self._id)
+            query = self.pins_table.delete()\
+                .where(self.pins_table.c.id == self._id)
 
             execute_query(self.engine, query)
 
-            return {'ok': True, 'msg': 'Pin deleted successfully'}
+            return {'ok': True, 'msg': 'Success'}
 
         except Exception as error:
             print(' * Error when trying to delete pin: {}'.format(error))

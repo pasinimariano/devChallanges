@@ -40,7 +40,7 @@ def upload_pin_controller(server):
                     if response['ok'] is False:
                         return send_invalid_error(response['error'])
 
-                    return func()
+                    return func(response['msg'])
 
                 return valid_user
 

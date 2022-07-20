@@ -6,7 +6,6 @@ from ..commons.execute_query import execute_query
 
 class CommentsService:
     def __init__(self, server, user_id=None, pin_id=None, post=None, comment_id=None):
-        self.server = server
         self.engine = server.config['DB_ENGINE']
         self.comments_table = get_table(self.engine, 'comments')
         self.user_id = user_id
@@ -27,7 +26,8 @@ class CommentsService:
 
             execute_query(self.engine, query)
 
-            return {'ok': True, 'msg': 'Comment added success'}
+            print(' * Comment added to pin {}'.format(self.pin_id))
+            return {'ok': True, 'msg': 'Success'}
 
         except Exception as error:
             return {'ok': False, 'error': error}
@@ -40,7 +40,8 @@ class CommentsService:
 
             execute_query(self.engine, query)
 
-            return {'ok': True, 'msg': 'Comment updated'}
+            print(' * Comment successfully updated')
+            return {'ok': True, 'msg': 'Success'}
 
         except Exception as error:
             return {'ok': False, 'error': error}
@@ -51,7 +52,8 @@ class CommentsService:
 
             execute_query(self.engine, query)
 
-            return {'ok': True, 'msg': 'Comment deleted'}
+            print(' * Comment successfully deleted')
+            return {'ok': True, 'msg': 'Success'}
 
         except Exception as error:
             return {'ok': False, 'error': error}

@@ -70,7 +70,32 @@ def add_pin_controller(server):
 
                 response = service.pin_to_board()
 
-                print(response)
+                if response['ok'] is False:
+                    return send_invalid_error(response['error'])
+
+                return func(response['msg'])
+
+            except Exception as error:
+                return send_internal_error(error)
+
+        return wrapper
+    return decorator
+
+
+def delete_pin_controller(server):
+    def decorator(func):
+        @wraps(func)
+        def wrapper():
+            try:
+                req = request.json
+                pin_id = req['pin_id']
+
+                if not pin_id:
+                    return send_invalid_error('Pin id is missing')
+
+                service = BoardsService(server, pin_id=pin_id)
+
+                response = service.delete_pin_in_board()
 
                 if response['ok'] is False:
                     return send_invalid_error(response['error'])
@@ -82,3 +107,31 @@ def add_pin_controller(server):
 
         return wrapper
     return decorator
+
+
+def delete_board_controller(server):
+    def decorator(func):
+        @wraps(func)
+        def wrapper():
+            try:
+                req = request.json
+                board_id = req['board_id']
+
+                if not board_id:
+                    return send_invalid_error('Board id is missing')
+
+                service = BoardsService(server, board_id=board_id)
+
+                response = service.delete_board()
+
+                if response['ok'] is False:
+                    return send_invalid_error(response['error'])
+
+                return func(response['msg'])
+
+            except Exception as error:
+                send_internal_error(error)
+
+        return wrapper
+    return decorator
+
