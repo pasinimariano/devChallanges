@@ -3,11 +3,13 @@ import React, { useEffect } from 'react'
 import { ExploreNavigation } from '../components/navigation/exploreNavigation'
 import { MainContainer } from './styles/homePageStyles'
 import { ManageModal } from '../components/navigation/manageModal'
+import { RenderAllPins } from '../components/images/renderAllPins'
 
+import { getAllPins } from '../redux/features/pinSlice'
 import { Statement } from './statements/homePageStatement'
 import { BootstrapStyles } from './styles/homePageStyles'
 
-export const HomePage = ({ logged }) => {
+export const HomePage = ({ logged, token }) => {
   const {
     exploreInput,
     render,
@@ -17,10 +19,21 @@ export const HomePage = ({ logged }) => {
     loginValues,
     createValues,
     serverError,
+    allPins,
     dispatch,
     handleInput,
     removeInput
   } = Statement()
+
+  useEffect(() => {
+    dispatch(getAllPins())
+  }, [])
+
+  useEffect(() => {
+    if (logged) {
+      setModalShow(false)
+    }
+  }, [logged])
 
   return (
     <MainContainer>
@@ -35,6 +48,7 @@ export const HomePage = ({ logged }) => {
         removeInput={removeInput}
         BootstrapStyles={BootstrapStyles}
       />
+      <RenderAllPins allPins={allPins} />
       <ManageModal
         render={render}
         setRender={setRender}

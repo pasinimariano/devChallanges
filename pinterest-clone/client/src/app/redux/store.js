@@ -5,11 +5,11 @@ import { persistReducer } from 'redux-persist'
 import thunk from 'redux-thunk'
 
 import AuthSlice from './features/authSlice'
-import ImagesSlice from './features/imageSlice'
+import PinsSlice from './features/pinSlice'
 
 const reducers = combineReducers({
   auth: AuthSlice,
-  images: ImagesSlice
+  pins: PinsSlice
 })
 
 const persistConfig = {

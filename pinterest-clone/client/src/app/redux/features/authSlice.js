@@ -3,6 +3,7 @@ import axios from 'axios'
 
 const initialState = {
   logged: false,
+  token: false,
   error: ''
 }
 
@@ -16,10 +17,12 @@ export const AuthSlice = createSlice({
   reducers: {
     logOut: state => {
       state.logged = false
+      state.token = false
       state.error = ''
     },
     logIn: (state, action) => {
-      state.logged = action.payload
+      state.logged = action.payload.data
+      state.token = action.payload.token
       state.error = ''
     },
     create: (state, action) => {
@@ -51,7 +54,8 @@ export const logoutUser = dispatch => {
 export const createUser = data => async dispatch => {
   try {
     const response = await axios.post(`${BASE_URL}/${CREATE_URL}`, data)
-    if (response.data === `User ${data.email} created successfully`) {
+
+    if (response.data === 'Success') {
       const data_for_login = { email: data.email, password: data.password }
       dispatch(loginUser(data_for_login))
     }

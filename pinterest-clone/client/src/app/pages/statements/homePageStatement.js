@@ -11,7 +11,8 @@ export const Statement = () => {
 
   // hooks
 
-  const serverError = useSelector(state => state.auth.error)
+  const serverError = useSelector(state => state.pins.error)
+  const allPins = useSelector(state => state.pins.allPins)
   const dispatch = useDispatch()
 
   //state management
@@ -33,6 +34,7 @@ export const Statement = () => {
     loginValues,
     createValues,
     serverError,
+    allPins,
     dispatch,
     handleInput,
     removeInput

@@ -31,22 +31,31 @@ export const LandingPage = ({ logged }) => {
     navigate,
     getFade,
     handleEffect,
-    scrollTop
+    scrollTop,
+    handleScroll
   } = Statement()
 
   useEffect(() => {
     if (logged) {
       setModalShow(false)
 
-      setTimeout(() => navigate('/home'), 2000)
+      setTimeout(() => navigate('/home'), 3000)
     }
   }, [logged, navigate])
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
 
   return (
     <MainContainer className='d-flex flex-column justify-content-center'>
       {logged ? (
         <Alert variant='success'>
-          {`Welcome to Pinhunt ${logged.user.firstname}`}
+          {`Welcome to Pinhunt ${logged.firstname}`}
         </Alert>
       ) : null}
 

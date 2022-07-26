@@ -131,7 +131,16 @@ export const Statement = () => {
   }
 
   const scrollTop = () => {
-    console.log('scrolling bug')
+    window.scrollTo({
+      top: 0,
+      behavior: 'auto'
+    })
+  }
+
+  const handleScroll = () => {
+    const scroll = window.scrollY
+
+    console.log(scroll)
   }
 
   return {
@@ -151,6 +160,7 @@ export const Statement = () => {
     navigate,
     getFade,
     handleEffect,
-    scrollTop
+    scrollTop,
+    handleScroll
   }
 }

@@ -55,6 +55,7 @@ class PinsService:
                 self.pins_table.c.title,
                 self.owners_table.c.firstname,
                 self.owners_table.c.lastname,
+                self.owners_table.c.profile_picture,
                 self.likes_table.c.id
             ).select_from(query)
 
@@ -71,6 +72,7 @@ class PinsService:
                         'url': row['url'],
                         'title': row['title'],
                         'owner': owner,
+                        'owner_profile': row['profile_picture'],
                         'likes': [row['id_1']]
                     }
 

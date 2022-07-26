@@ -109,12 +109,6 @@ export const FifthSection = ({
           )}
         </Col>
       </div>
-      <ButtonToTop
-        onClick={() => scrollTop()}
-        className='d-flex justify-content-center align-items-center'
-      >
-        Scroll to top
-      </ButtonToTop>
     </SectionContainer>
   )
 }

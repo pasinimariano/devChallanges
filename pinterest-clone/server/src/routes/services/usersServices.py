@@ -32,7 +32,7 @@ class UserService:
             execute_query(self.engine, query)
 
             print(' * {} {} created successfully'.format(self.firstname, self.lastname))
-            return {'ok': True, 'msg': 'User created successfully'}
+            return {'ok': True, 'msg': 'Success'}
 
         except Exception as exception:
             format_error = str(exception.__dict__['orig'])

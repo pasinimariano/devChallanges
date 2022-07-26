@@ -2,24 +2,24 @@ import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const initialState = {
-  allImages: [],
-  imageById: [],
+  allPins: [],
+  pinById: [],
   error: ''
 }
 
 const BASE_URL = process.env.SERVER_BASE_URL
-const GET_IMAGES_URL = process.env.SERVER_GET_IMAGES_URL
+const GET_ALL_PINS_URL = process.env.SERVER_ALL_PINS_URL
 
-export const ImagesSlice = createSlice({
+export const PinsSlice = createSlice({
   name: 'images',
   initialState,
   reducers: {
     setAllImages: (state, action) => {
-      state.allImages = action.payload
+      state.allPins = action.payload
       state.error = ''
     },
     setImageById: (state, action) => {
-      state.imageById = action.payload
+      state.pinById = action.payload
       state.error = ''
     },
     setError: (state, action) => {
@@ -28,16 +28,14 @@ export const ImagesSlice = createSlice({
   }
 })
 
-export const getAllImages = token => async dispatch => {
+export const getAllPins = () => async dispatch => {
   try {
-    const response = await axios.get(
-      `${BASE_URL}/${GET_IMAGES_URL}?image=all&token=${token}`
-    )
+    const response = await axios.get(`${BASE_URL}/${GET_ALL_PINS_URL}`)
     dispatch(setAllImages(response.data))
   } catch (error) {
     dispatch(setError(error.response.data))
   }
 }
 
-export const { setAllImages, setImageById, setError } = ImagesSlice.actions
-export default ImagesSlice.reducer
+export const { setAllImages, setImageById, setError } = PinsSlice.actions
+export default PinsSlice.reducer

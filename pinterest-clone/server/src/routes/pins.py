@@ -19,7 +19,6 @@ def pins_routes(server):
         )
 
     @server.route('/pin/all', methods=['GET'])
-    @token_validator(server)
     @get_all_controller(server)
     def get_all(response):
         return make_response(
