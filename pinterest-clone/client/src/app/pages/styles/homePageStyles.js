@@ -106,5 +106,47 @@ export const BootstrapStyles = {
     textAlign: 'center',
     marginTop: '20px',
     fontSize: '15px'
+  },
+  galeryContainer: {
+    width: '95%',
+    marginTop: '30px'
+  },
+  cardContainer: {
+    border: 'none'
+  },
+  cardImg: {
+    borderRadius: '10px'
+  },
+  cardTitle: {
+    fontSize: '18px',
+    fontWeight: 'bolder',
+    textAlign: 'center'
+  },
+  cardFooter: {
+    border: 'none',
+    backgroundColor: 'white',
+    width: '50%'
+  },
+  ownerContainer: {
+    width: '60%'
+  },
+  cardOwner: {
+    fontSize: '12px',
+    fontWeight: 'bolder',
+    textAlign: 'center'
+  },
+  ownerProfile: {
+    borderRadius: '40px',
+    width: '30px',
+    height: '30px'
+  },
+  heartIcon: {
+    color: Colors.coral
+  },
+  emogiIcon: {
+    color: Colors.purple
+  },
+  starIcon: {
+    color: Colors.yellow
   }
 }

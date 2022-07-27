@@ -51,7 +51,7 @@ export const ExploreNavigation = ({
       </Col>
       <Col lg={2} className='d-flex justify-content-end'>
         {logged ? (
-          <h2>Estoy log</h2>
+          <h2>Im logged in</h2>
         ) : (
           <AuthButtons
             setRender={setRender}

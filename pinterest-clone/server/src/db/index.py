@@ -82,7 +82,7 @@ class DbConnection:
             name = parse_url.path
             title = random_image['user']['first_name']
             description = random_image['description']
-            owner = '6c8c10a4-0fb3-49f1-b6fc-5642cd10841a'
+            owner = '8ee42c60-cebe-45b4-9feb-0a001224a45c'
 
             query = pins_table.insert().values(
                 id=id_generator,

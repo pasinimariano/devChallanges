@@ -1,5 +1,6 @@
 from uuid import uuid4
 import cloudinary.uploader
+import random
 
 from ..commons.get_table import get_table
 from ..commons.execute_query import execute_query
@@ -20,6 +21,7 @@ class UserService:
     def create_new_user(self):
         try:
             id_generator = uuid4().hex
+            user_color = ['#'+''.join([random.choice('0123456789ABCDEF') for x in range(6)])]
             query = self.user_table.insert()\
                 .values(
                     id=id_generator,
@@ -27,6 +29,7 @@ class UserService:
                     lastname=self.lastname,
                     email=self.email,
                     password=self.password,
+                    profile_picture=user_color
                 )
 
             execute_query(self.engine, query)

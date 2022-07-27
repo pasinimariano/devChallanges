@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { ExploreNavigation } from '../components/navigation/exploreNavigation'
 import { MainContainer } from './styles/homePageStyles'
 import { ManageModal } from '../components/navigation/manageModal'
-import { RenderAllPins } from '../components/images/renderAllPins'
+import { RenderAllPins } from '../components/pins/renderAllPins'
 
 import { getAllPins } from '../redux/features/pinSlice'
 import { Statement } from './statements/homePageStatement'
@@ -26,9 +26,7 @@ export const HomePage = ({ logged, token }) => {
   } = Statement()
 
   useEffect(() => {
-    if (!allPins) {
-      dispatch(getAllPins())
-    }
+    dispatch(getAllPins())
   }, [])
 
   useEffect(() => {
@@ -50,7 +48,7 @@ export const HomePage = ({ logged, token }) => {
         removeInput={removeInput}
         BootstrapStyles={BootstrapStyles}
       />
-      <RenderAllPins allPins={allPins} />
+      <RenderAllPins allPins={allPins} BootstrapStyles={BootstrapStyles} />
       <ManageModal
         render={render}
         setRender={setRender}
