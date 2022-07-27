@@ -26,7 +26,9 @@ export const HomePage = ({ logged, token }) => {
   } = Statement()
 
   useEffect(() => {
-    dispatch(getAllPins())
+    if (!allPins) {
+      dispatch(getAllPins())
+    }
   }, [])
 
   useEffect(() => {

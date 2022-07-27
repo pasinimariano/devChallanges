@@ -63,8 +63,8 @@ class DbConnection:
         seeder = ImageSeeder(ENV['UNSPLASH_KEY'])
 
         self.metadata.reflect(bind=self.engine)
-        images_table = self.metadata.tables['images']
-        query = images_table.select()
+        pins_table = self.metadata.tables['pins']
+        query = pins_table.select()
         connection = self.engine.connect()
         result = self.engine.execute(query)
         response = 0
@@ -72,29 +72,25 @@ class DbConnection:
         for row in result:
             response += 1
 
-        while response < 100:
+        while response < 50:
             random_image = seeder.get_random_images()
-            _id = uuid4().hex
+            id_generator = uuid4().hex
             url = random_image['urls']['full']
             open_url = urlopen(url)
             mimetype = open_url.info().get_content_type()
             parse_url = urlparse(url)
             name = parse_url.path
-            title = random_image['user']['username'].capitalize()
-            posted_at = random_image['created_at']
-            owner = '446714f7fd8347479f17962bc88f1df0'
+            title = random_image['user']['first_name']
+            description = random_image['description']
+            owner = '6c8c10a4-0fb3-49f1-b6fc-5642cd10841a'
 
-            metadata = MetaData()
-            metadata.reflect(bind=self.engine)
-            images_table = metadata.tables['images']
-
-            query = images_table.insert().values(
-                id=_id,
+            query = pins_table.insert().values(
+                id=id_generator,
                 mimetype=mimetype,
                 url=url,
                 name=name,
                 title=title,
-                posted_at=posted_at,
+                description=description,
                 owner=owner
             )
 
