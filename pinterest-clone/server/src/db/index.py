@@ -72,7 +72,7 @@ class DbConnection:
         for row in result:
             response += 1
 
-        while response < 50:
+        while response < 100:
             random_image = seeder.get_random_images()
             id_generator = uuid4().hex
             url = random_image['urls']['full']

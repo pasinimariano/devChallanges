@@ -12,6 +12,7 @@ class UserService:
         self.user_table = get_table(self.engine, 'users')
         self.likes_table = get_table(self.engine, 'likes')
         self.pins_table = get_table(self.engine, 'pins')
+        self.boards_table = get_table(self.engine, 'boards')
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
@@ -50,11 +51,13 @@ class UserService:
                 query = self.user_table\
                     .join(self.likes_table, self.likes_table.c.owner == self.user_table.c.id, isouter=True)\
                     .join(self.pins_table, self.pins_table.c.owner == self.user_table.c.id, isouter=True)\
+                    .join(self.boards_table, self.boards_table.c.owner == self.user_table.c.id, isouter=True)\
                     .select().where(self.user_table.c.email == self.email)
             else:
                 query = self.user_table\
                     .join(self.likes_table, self.likes_table.c.owner == self.user_table.c.id, isouter=True) \
                     .join(self.pins_table, self.pins_table.c.owner == self.user_table.c.id, isouter=True) \
+                    .join(self.boards_table, self.boards_table.c.owner == self.user_table.c.id, isouter=True) \
                     .select().where(self.user_table.c.id == self._id)
 
             result = execute_query(self.engine, query)
@@ -68,6 +71,9 @@ class UserService:
                 elif bool(user) and row['id_2']:
                     user['data']['pins'].append(row['id_2'])
 
+                elif bool(user) and row['id_3']:
+                    user['data']['boards'].append(row['title_1'])
+
                 else:
                     user['data'] = {
                         'id': row['id'],
@@ -76,7 +82,8 @@ class UserService:
                         'email': row['email'],
                         'profile_picture': row['profile_picture'],
                         'likes': [row['id_1']],
-                        'pins': [row['id_2']]
+                        'pins': [row['id_2']],
+                        'boards': [row['title_1']]
                     }
                     password = row['password']
 

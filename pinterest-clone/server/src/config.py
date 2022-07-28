@@ -40,5 +40,5 @@ class DevConfig(Config):
     TESTING = True
     PORT = 3001
 
-    '''Config.DB_CONNECTION.seed_images_table()'''
+    Config.DB_CONNECTION.seed_images_table()
 

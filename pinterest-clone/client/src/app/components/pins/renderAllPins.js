@@ -1,8 +1,9 @@
-import React from 'react'
-import { Container, Row, Card, Image } from 'react-bootstrap'
+import $ from 'jquery'
+import React, { useEffect, useState } from 'react'
+import Masonry from 'react-masonry-css'
+import { Container, Card, Image, Button } from 'react-bootstrap'
 import { BsHeartFill, BsFillStarFill } from 'react-icons/bs'
 import { BsEmojiHeartEyes } from 'react-icons/bs'
-import Masonry from 'react-masonry-css'
 
 import { setProfilePicture } from './setProfilePicture'
 import '../../pages/styles/masonry.css'
@@ -15,25 +16,29 @@ const breakpointColumnsObj = {
 }
 
 export const RenderAllPins = ({ allPins, BootstrapStyles }) => {
+  const [hover, setHover] = useState('')
+
   const pins = Object.entries(allPins).map(([key, values]) => {
     let image
     if (values.owner_profile[0] === '{') {
       image = setProfilePicture(values.owner, values.owner_profile)
     }
-    console.log(image)
+
     return (
-      <Card key={key} style={BootstrapStyles.cardContainer}>
-        <Card.Img
-          variant='top'
-          src={values.url}
-          style={BootstrapStyles.cardImg}
-        />
+      <Card
+        key={key}
+        style={BootstrapStyles.cardContainer}
+        id={key}
+        onMouseEnter={() => setHover(key)}
+        onMouseLeave={() => setHover('')}
+      >
+        <Card.Img variant='top' src={values.url} alt={values.url} />
         <Card.Body className='d-flex flex-column align-items-center'>
           <Card.Title style={BootstrapStyles.cardTitle}>
             {values.title}
           </Card.Title>
-          <Card.Text
-            className='d-flex align-items-end justify-content-around'
+          <Container
+            className='d-flex align-items-center justify-content-around'
             style={BootstrapStyles.ownerContainer}
           >
             {image ? (
@@ -45,8 +50,8 @@ export const RenderAllPins = ({ allPins, BootstrapStyles }) => {
                 style={BootstrapStyles.ownerProfile}
               />
             )}
-            <h5 style={BootstrapStyles.cardOwner}>{values.owner}</h5>
-          </Card.Text>
+            {values.owner}
+          </Container>
           <Card.Footer
             className='d-flex justify-content-around align-items-center'
             style={BootstrapStyles.cardFooter}
@@ -61,6 +66,19 @@ export const RenderAllPins = ({ allPins, BootstrapStyles }) => {
     )
   })
 
+  const CardHover =
+    '<div id=hover class=myHover> <Button class=hoverButton>  Pin it </Button> </div>'
+
+  useEffect(() => {
+    if (hover) {
+      const element = $(`#${hover}`)
+      element.append(CardHover)
+    } else {
+      $('#hover').remove()
+    }
+  }, [hover])
+
+  console.log(hover)
   return (
     <Container
       fluid

@@ -12,7 +12,7 @@ import './maincss.css'
 const Root = ReactDom.createRoot(document.getElementById('root'))
 const persistor = persistStore(store)
 
-//persistor.purge()
+persistor.purge()
 
 Root.render(
   <Provider store={store}>

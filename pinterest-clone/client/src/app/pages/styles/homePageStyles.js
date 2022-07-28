@@ -114,9 +114,6 @@ export const BootstrapStyles = {
   cardContainer: {
     border: 'none'
   },
-  cardImg: {
-    borderRadius: '10px'
-  },
   cardTitle: {
     fontSize: '18px',
     fontWeight: 'bolder',
@@ -128,9 +125,7 @@ export const BootstrapStyles = {
     width: '50%'
   },
   ownerContainer: {
-    width: '60%'
-  },
-  cardOwner: {
+    width: '60%',
     fontSize: '12px',
     fontWeight: 'bolder',
     textAlign: 'center'
