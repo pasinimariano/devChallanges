@@ -15,7 +15,7 @@
   margin-bottom: 30px;
 }
 
-.myHover {
+.my-hover {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -26,7 +26,11 @@
   justify-content: center;
 }
 
-.hoverButton {
+.form-option {
+  font-weight: bolder;
+}
+
+.hover-button {
   grid-row: 2 / 3;
   width: 100px;
   height: 45px;
@@ -34,4 +38,12 @@
   background-color: #7D1E6A;
   color: white;
   font-weight: bolder;
+}
+
+.hover-download { 
+  margin-bottom: 20px;
+}
+
+.hover-download:hover {
+  color:#7D1E6A
 }

@@ -6,6 +6,7 @@ export const Statement = () => {
   const [exploreInput, setExploreInput] = useState('')
   const [render, setRender] = useState('')
   const [modalShow, setModalShow] = useState(false)
+  const [newBoardValues, setNewBoardValues] = useState({ id: '', url: '' })
   const loginValues = { email: '', password: '' }
   const createValues = { firstname: '', lastname: '', email: '', password: '' }
 
@@ -31,6 +32,8 @@ export const Statement = () => {
     setRender,
     modalShow,
     setModalShow,
+    newBoardValues,
+    setNewBoardValues,
     loginValues,
     createValues,
     serverError,
@@ -38,5 +41,32 @@ export const Statement = () => {
     dispatch,
     handleInput,
     removeInput
+  }
+}
+
+export const AllPinsStatement = () => {
+  const [show, setShow] = useState(false)
+  const [hover, setHover] = useState('')
+  const [option, setOption] = useState('')
+  const breakpointColumns = {
+    default: 6,
+    1100: 3,
+    700: 2,
+    500: 1
+  }
+
+  const handleDropChange = event => {
+    setOption(event.target.outerText)
+  }
+
+  return {
+    show,
+    setShow,
+    hover,
+    setHover,
+    option,
+    setOption,
+    breakpointColumns,
+    handleDropChange
   }
 }

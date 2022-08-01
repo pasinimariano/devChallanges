@@ -2,7 +2,6 @@ import React from 'react'
 import { Container, Col, Image } from 'react-bootstrap'
 import { FaSearch } from 'react-icons/fa'
 import { ImCancelCircle } from 'react-icons/im'
-import { HiOutlineArrowSmDown } from 'react-icons/hi'
 
 import { AuthButtons } from '../../public/commons/authButtons'
 

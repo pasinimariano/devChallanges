@@ -1,13 +1,11 @@
 import React from 'react'
 import { Col, Container, Card } from 'react-bootstrap'
-import { ImArrowUp } from 'react-icons/im'
 
 import { SectionContainer } from '../../pages/styles/landingPageStyles'
 import { Login } from '../auth/login'
 import { CreateUser } from '../auth/create'
 import Logo from '../../assets/logoph.png'
-import { Footer } from '../navigation/modal'
-import { ButtonToTop } from '../../pages/styles/landingPageStyles'
+import { Footer } from '../modals/modalAuth'
 
 const CardBody = ({ title, subtitle, body, footer, BootstrapStyles }) => {
   return (

@@ -2,10 +2,7 @@ import React from 'react'
 import { Container, Col, Image, Button } from 'react-bootstrap'
 
 import Logo from '../../assets/logo.png'
-import { ModalAuth } from './modal'
-import { Login } from '../auth/login'
-import { CreateUser } from '../auth/create'
-import { ManageModal } from './manageModal'
+import { ManageModal } from '../modals/manageModal'
 
 export const NavigationLanding = ({
   render,

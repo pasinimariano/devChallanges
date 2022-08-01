@@ -143,5 +143,14 @@ export const BootstrapStyles = {
   },
   starIcon: {
     color: Colors.yellow
+  },
+  newBoardImg: {
+    width: '85%',
+    borderRadius: '10px',
+    marginBottom: '20px'
+  },
+  newBoardTitle: {
+    fontWeight: 'bolder',
+    fontSize: '16px'
   }
 }

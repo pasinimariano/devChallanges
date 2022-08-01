@@ -1,24 +1,34 @@
-import $ from 'jquery'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import Masonry from 'react-masonry-css'
-import { Container, Card, Image, Button } from 'react-bootstrap'
-import { BsHeartFill, BsFillStarFill } from 'react-icons/bs'
-import { BsEmojiHeartEyes } from 'react-icons/bs'
+import { Container, Card, Image } from 'react-bootstrap'
+import { BsHeartFill, BsFillStarFill, BsEmojiHeartEyes } from 'react-icons/bs'
 
 import { setProfilePicture } from './setProfilePicture'
+import { CardHover } from './cardHover'
+
+import { AllPinsStatement } from '../../pages/statements/homePageStatement'
 import '../../pages/styles/masonry.css'
 
-const breakpointColumnsObj = {
-  default: 6,
-  1100: 3,
-  700: 2,
-  500: 1
-}
+export const RenderAllPins = ({
+  allPins,
+  logged,
+  setRender,
+  setModalShow,
+  setNewBoardValues,
+  BootstrapStyles
+}) => {
+  const {
+    show,
+    setShow,
+    hover,
+    setHover,
+    option,
+    setOption,
+    breakpointColumns,
+    handleDropChange
+  } = AllPinsStatement()
 
-export const RenderAllPins = ({ allPins, BootstrapStyles }) => {
-  const [hover, setHover] = useState('')
-
-  const pins = Object.entries(allPins).map(([key, values]) => {
+  const Cards = Object.entries(allPins).map(([key, values]) => {
     let image
     if (values.owner_profile[0] === '{') {
       image = setProfilePicture(values.owner, values.owner_profile)
@@ -29,9 +39,28 @@ export const RenderAllPins = ({ allPins, BootstrapStyles }) => {
         key={key}
         style={BootstrapStyles.cardContainer}
         id={key}
-        onMouseEnter={() => setHover(key)}
-        onMouseLeave={() => setHover('')}
+        onMouseEnter={() => {
+          setHover(key)
+          setShow(true)
+        }}
+        onMouseLeave={() => {
+          setHover('')
+          setShow(false)
+          setOption('')
+        }}
       >
+        {show && hover === key ? (
+          <CardHover
+            imgId={key}
+            url={values.url}
+            boards={logged.boards}
+            handleDropChange={handleDropChange}
+            setRender={setRender}
+            setModalShow={setModalShow}
+            setNewBoardValues={setNewBoardValues}
+            option={option}
+          />
+        ) : null}
         <Card.Img variant='top' src={values.url} alt={values.url} />
         <Card.Body className='d-flex flex-column align-items-center'>
           <Card.Title style={BootstrapStyles.cardTitle}>
@@ -66,19 +95,6 @@ export const RenderAllPins = ({ allPins, BootstrapStyles }) => {
     )
   })
 
-  const CardHover =
-    '<div id=hover class=myHover> <Button class=hoverButton>  Pin it </Button> </div>'
-
-  useEffect(() => {
-    if (hover) {
-      const element = $(`#${hover}`)
-      element.append(CardHover)
-    } else {
-      $('#hover').remove()
-    }
-  }, [hover])
-
-  console.log(hover)
   return (
     <Container
       fluid
@@ -86,11 +102,11 @@ export const RenderAllPins = ({ allPins, BootstrapStyles }) => {
       style={BootstrapStyles.galeryContainer}
     >
       <Masonry
-        breakpointCols={breakpointColumnsObj}
+        breakpointCols={breakpointColumns}
         className='my-masonry-grid'
         columnClassName='my-masonry-grid_column'
       >
-        {allPins && pins}
+        {allPins && Cards}
       </Masonry>
     </Container>
   )

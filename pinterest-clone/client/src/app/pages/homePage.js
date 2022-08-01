@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { ExploreNavigation } from '../components/navigation/exploreNavigation'
 import { MainContainer } from './styles/homePageStyles'
-import { ManageModal } from '../components/navigation/manageModal'
+import { ManageModal } from '../components/modals/manageModal'
 import { RenderAllPins } from '../components/pins/renderAllPins'
 
 import { getAllPins } from '../redux/features/pinSlice'
@@ -16,6 +16,8 @@ export const HomePage = ({ logged, token }) => {
     setRender,
     modalShow,
     setModalShow,
+    newBoardValues,
+    setNewBoardValues,
     loginValues,
     createValues,
     serverError,
@@ -48,12 +50,20 @@ export const HomePage = ({ logged, token }) => {
         removeInput={removeInput}
         BootstrapStyles={BootstrapStyles}
       />
-      <RenderAllPins allPins={allPins} BootstrapStyles={BootstrapStyles} />
+      <RenderAllPins
+        allPins={allPins}
+        logged={logged}
+        setRender={setRender}
+        setModalShow={setModalShow}
+        setNewBoardValues={setNewBoardValues}
+        BootstrapStyles={BootstrapStyles}
+      />
       <ManageModal
         render={render}
         setRender={setRender}
         modalShow={modalShow}
         setModalShow={setModalShow}
+        newBoardValues={newBoardValues}
         loginValues={loginValues}
         createValues={createValues}
         serverError={serverError}
