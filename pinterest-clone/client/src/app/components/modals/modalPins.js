@@ -1,26 +1,9 @@
 import React from 'react'
-import { Modal, Container, Image, Button } from 'react-bootstrap'
+import { Modal, Image } from 'react-bootstrap'
 
 import Logo from '../../assets/logoph.png'
 
-export const Footer = ({ style, option }) => {
-  return (
-    <Container className='d-flex justify-content-around'>
-      <Button> Cancel </Button>
-      <Button> Create </Button>
-    </Container>
-  )
-}
-
-export const ModalPins = ({
-  show,
-  onHide,
-  title,
-  body,
-  footer,
-  style,
-  setRender
-}) => {
+export const ModalPins = ({ show, onHide, title, body, style }) => {
   return (
     <Modal
       show={show}
@@ -40,9 +23,6 @@ export const ModalPins = ({
         </Modal.Title>
       </Modal.Header>
       <Modal.Body> {body} </Modal.Body>
-      <Modal.Footer>
-        {footer === 'newBoard' ? <Footer style={style} option='login' /> : null}
-      </Modal.Footer>
     </Modal>
   )
 }

@@ -35,7 +35,8 @@ def create_board_controller(server):
         @wraps(func)
         def wrapper():
             try:
-                req = request.form
+                req = request.json
+ 
                 title, owner = req['title'], req['owner']
 
                 service = BoardsService(server, title, owner)

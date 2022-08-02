@@ -20,11 +20,13 @@ export const HomePage = ({ logged, token }) => {
     setNewBoardValues,
     loginValues,
     createValues,
+    createBoardValues,
     serverError,
     allPins,
     dispatch,
     handleInput,
-    removeInput
+    removeInput,
+    createBoard
   } = Statement()
 
   useEffect(() => {
@@ -66,6 +68,10 @@ export const HomePage = ({ logged, token }) => {
         newBoardValues={newBoardValues}
         loginValues={loginValues}
         createValues={createValues}
+        createBoardValues={createBoardValues}
+        owner={logged.id}
+        token={token}
+        createBoard={createBoard}
         serverError={serverError}
         dispatch={dispatch}
         BootstrapStyles={BootstrapStyles}

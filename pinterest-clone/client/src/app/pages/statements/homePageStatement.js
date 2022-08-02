@@ -1,5 +1,12 @@
+import axios from 'axios'
 import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+
+import { setServerError } from '../../redux/features/pinSlice'
+import { updateBoardState } from '../../redux/features/authSlice'
+
+const BASE_URL = process.env.SERVER_BASE_URL
+const CREATE_BOARD_URL = process.env.SERVER_CREATE_BOARD
 
 export const Statement = () => {
   //states
@@ -9,6 +16,7 @@ export const Statement = () => {
   const [newBoardValues, setNewBoardValues] = useState({ id: '', url: '' })
   const loginValues = { email: '', password: '' }
   const createValues = { firstname: '', lastname: '', email: '', password: '' }
+  const createBoardValues = { title: '' }
 
   // hooks
 
@@ -26,6 +34,24 @@ export const Statement = () => {
     setExploreInput('')
   }
 
+  const createBoard = async (title, owner, token) => {
+    const data = title
+    data['owner'] = owner
+
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/${CREATE_BOARD_URL}?token=${token}`,
+        data
+      )
+
+      response.msg === 'Success'
+        ? dispatch(updateBoardState(title.title))
+        : dispatch(setServerError(response.error))
+    } catch (error) {
+      dispatch(setServerError(error))
+    }
+  }
+
   return {
     exploreInput,
     render,
@@ -36,11 +62,13 @@ export const Statement = () => {
     setNewBoardValues,
     loginValues,
     createValues,
+    createBoardValues,
     serverError,
     allPins,
     dispatch,
     handleInput,
-    removeInput
+    removeInput,
+    createBoard
   }
 }
 

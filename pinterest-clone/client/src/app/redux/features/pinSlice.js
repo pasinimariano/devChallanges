@@ -37,5 +37,9 @@ export const getAllPins = () => async dispatch => {
   }
 }
 
+export const setServerError = error => {
+  setError(error.response.data)
+}
+
 export const { setAllImages, setImageById, setError } = PinsSlice.actions
 export default PinsSlice.reducer

@@ -39,3 +39,10 @@ export const createUserSchema = Yup.object().shape({
     .max(20, 'The maximum number of characters is 20')
     .required('Password is required')
 })
+
+export const createBoardSchema = Yup.object().shape({
+  title: Yup.string()
+    .min(3, 'The minimum number of characters is 3')
+    .max(50, 'The maximum number of characters is 50')
+    .required('Title is required')
+})

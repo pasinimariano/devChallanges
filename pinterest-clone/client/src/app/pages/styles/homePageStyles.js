@@ -43,9 +43,8 @@ export const BootstrapStyles = {
     width: '90%'
   },
   formInput: {
-    width: '70%',
-    borderRadius: '15px',
-    marginBottom: '5px'
+    width: '100%',
+    borderRadius: '15px'
   },
   form: {
     borderRadius: '12px'
@@ -58,11 +57,23 @@ export const BootstrapStyles = {
     backgroundColor: google ? Colors.blue : Colors.purple,
     fontWeight: 'bolder'
   }),
+  formCreateBoardContainer: {
+    width: '100%',
+    marginBottom: '25px'
+  },
+  formCreateBoard: {
+    width: '100%',
+    height: '5vh',
+    borderRadius: '25px',
+    textAlign: 'center',
+    border: `solid ${Colors.gray}`
+  },
   modalTitleContainer: {
     width: '100%'
   },
   modalLogo: {
-    height: '55px'
+    height: '55px',
+    marginBottom: '10px'
   },
   modalTitle: {
     fontWeight: 'bolder',
@@ -152,5 +163,19 @@ export const BootstrapStyles = {
   newBoardTitle: {
     fontWeight: 'bolder',
     fontSize: '16px'
+  },
+  createBoardButton: hover => ({
+    backgroundColor: hover ? Colors.wine : 'white',
+    color: hover ? 'white' : Colors.wine,
+    borderColor: Colors.wine,
+    fontWeight: 'bolder',
+    marginBottom: '20px'
+  }),
+  cancelBoardButton: {
+    backgroundColor: Colors.wine,
+    color: 'white',
+    borderColor: Colors.wine,
+    fontWeight: 'bolder',
+    marginBottom: '20px'
   }
 }

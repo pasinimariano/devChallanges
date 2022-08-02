@@ -34,6 +34,9 @@ export const AuthSlice = createSlice({
     },
     delError: state => {
       state.error = ''
+    },
+    setBoards: (state, action) => {
+      console.log(action)
     }
   }
 })
@@ -69,5 +72,16 @@ export const clearError = () => dispatch => {
   dispatch(delError())
 }
 
-export const { logIn, logOut, create, setError, delError } = AuthSlice.actions
+export const updateBoardState = newTitle => {
+  setBoards(newTitle)
+}
+
+export const {
+  logIn,
+  logOut,
+  create,
+  setError,
+  delError,
+  setBoards
+} = AuthSlice.actions
 export default AuthSlice.reducer

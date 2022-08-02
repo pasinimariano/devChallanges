@@ -14,6 +14,10 @@ export const ManageModal = ({
   newBoardValues,
   loginValues,
   createValues,
+  createBoardValues,
+  createBoard,
+  owner,
+  token,
   serverError,
   dispatch,
   BootstrapStyles
@@ -61,10 +65,15 @@ export const ManageModal = ({
           body={
             <NewBoardBody
               newBoardValues={newBoardValues}
+              createBoard={createBoard}
+              createBoardValues={createBoardValues}
+              owner={owner}
+              token={token}
+              setModalShow={setModalShow}
+              dispatch={dispatch}
               BootstrapStyles={BootstrapStyles}
             />
           }
-          footer='newBoard'
           show={modalShow}
           onHide={() => setModalShow(false)}
           style={BootstrapStyles}
